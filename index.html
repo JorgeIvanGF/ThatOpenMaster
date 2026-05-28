@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined"> <!-- To reference Google Icons -->
+	<link rel="stylesheet" href="style.css"> <!-- To reference a CSS file -->
+</head>
+<body>
+	<!-- Sidebar______________________________________________________________________________ -->
+	<aside id="sidebar">
+		<img id="company-logo" src="./Assets/companylogo.svg" alt="Construction Company logo">
+		<!-- <ul id="nav_buttons">
+			<li id="projectsBtn"><span class="material-icons-outlined">computer</span> Projects</li>
+			<li id="usersBtn"><span class="material-icons-outlined">how_to_reg</span> Users</li>
+		</ul> -->
+		<ul id="nav-list"> <li class="nav-item">
+      		<button type="button" class="nav-button" id="projectsBtn">
+        	<span class="material-icons-outlined">computer</span>
+        	<span class="button-text">Projects</span>
+      		</button>
+   			</li>
+			<li class="nav-item">
+			<button type="button" class="nav-button" id="usersBtn">
+				<span class="material-icons-outlined">how_to_reg</span>
+				<span class="button-text">Users</span>
+			</button>
+			</li>
+		</ul>
+	</aside>
+	<!-- Main Content__________________________________________________________________________ -->
+	<main id="content">
+		<div id="projects_list_page" style="display: none;" >
+			<!-- FORM _________________ -->
+			<dialog id="new_project_modal"> <!-- to create the Modal Container -->
+				<form> <!-- to create the Form -->
+					<h2>New Project</h2>
+					<div class="input_list">
+						<div class="form_field_container">
+							<label><span class="material-icons-outlined">home_work</span>Name</label>
+							<input type="text" placeholder="Provide the name of the new project"> <!-- Notice: "input" is a SELFCLOSED tag -->
+						</div>
+						<div class="form_field_container">
+							<label><span class="material-icons-outlined">text_snippet</span>Description</label>
+							<textarea rows="4" cols="20" placeholder="Provide the description of the new project"></textarea>
+						</div>
+						<div class="form_field_container">
+							<label><span class="material-icons-outlined">person</span>Role</label>
+							<select>
+								<option>Architect</option>
+								<option>Engineer</option>
+								<option>Teacher</option>
+							</select>
+						</div>
+						<div class="form_field_container">
+							<label><span class="material-icons-outlined">verified_user</span>Status</label>
+							<select>
+								<option>Pending</option>
+								<option>Active</option>
+								<option>Finished</option>
+							</select>
+						</div>
+						<div class="form_field_container">
+							<label><span class="material-icons-outlined">date_range</span>Finish Date</label>
+							<input type="date">
+						</div>
+					</div>
+					<div id="form_buttons">
+						<button id="cancel_project" class="cancel_btn">Cancel</button>
+						<button id="accept_project" class="accept_btn">Accept</button>
+					</div>
+				</form>
+			</dialog>
+			<!-- HEADER ______________________ -->
+			<header id="page_header">
+				<h2>Projects</h2>
+				<div>
+					<button>New Project</button>
+				</div>
+			</header>
+			<!-- PROJECT LIST ________________ -->
+			<div id="project_list"> <!-- List of Cards -->
+				<div class="project_card"> <!-- The Card itself -->
+					<div class="card_header"> <!-- for header card -->
+						<p style="background-color: #c86918;padding: 10px;border-radius: 6px;aspect-ratio: 1;">HC</p> <!-- for the Initials -->
+						<div> <!-- for name and description -->
+							<h5>Hospital Center</h5>
+							<p style="font-size: 12px;">Community hospital located at downtown</p>
+						</div>
+					</div>
+					<div class="card_content"> <!-- for Content Card -->
+						<div class="card_property">
+							<p style="color: gray;"> Status</p>
+							<p>Value</p>
+						</div>
+						<div class="card_property"> 
+							<p style="color: gray;">Status</p>
+							<p>Value</p>
+						</div>
+						<div class="card_property">
+							<p style="color: gray;">Status</p>
+							<p>Value</p>
+						</div>
+						<div class="card_property">
+							<p style="color: gray;">Status</p>
+							<p>Value</p>
+						</div>
+					</div>
+				</div>
+				<div class="project_card"> <!-- The Card itself -->
+					<div class="card_header"> <!-- for header card -->
+						<p style="background-color: #c86918;padding: 10px;border-radius: 6px;aspect-ratio: 1;">HC</p> <!-- for the Initials -->
+						<div> <!-- for name and description -->
+							<h5>Project Name</h5>
+							<p>Description goes here</p>
+						</div>
+					</div>
+					<div class="card_content"> <!-- for Content Card -->
+						<div class="card_property">
+							<p style="color: gray;"> Status</p>
+							<p>Value</p>
+						</div>
+						<div class="card_property"> 
+							<p style="color: gray;">Status</p>
+							<p>Value</p>
+						</div>
+						<div class="card_property">
+							<p style="color: gray;">Status</p>
+							<p>Value</p>
+						</div>
+						<div class="card_property">
+							<p style="color: gray;">Status</p>
+							<p>Value</p>
+						</div>
+					</div>
+				</div>
+				<div class="project_card"> <!-- The Card itself -->
+					<div class="card_header"> <!-- for header card -->
+						<p style="background-color: #c86918;padding: 10px;border-radius: 6px;aspect-ratio: 1;">HC</p> <!-- for the Initials -->
+						<div> <!-- for name and description -->
+							<h5>Project Name</h5>
+							<p>Description goes here</p>
+						</div>
+					</div>
+					<div class="card_content"> <!-- for Content Card -->
+						<div class="card_property">
+							<p style="color: gray;"> Status</p>
+							<p>Value</p>
+						</div>
+						<div class="card_property"> 
+							<p style="color: gray;">Status</p>
+							<p>Value</p>
+						</div>
+						<div class="card_property">
+							<p style="color: gray;">Status</p>
+							<p>Value</p>
+						</div>
+						<div class="card_property">
+							<p style="color: gray;">Status</p>
+							<p>Value</p>
+						</div>
+					</div>
+				</div>
+				<div class="project_card"> <!-- The Card itself -->
+					<div class="card_header"> <!-- for header card -->
+						<p style="background-color: #c86918;padding: 10px;border-radius: 6px;aspect-ratio: 1;">HC</p> <!-- for the Initials -->
+						<div> <!-- for name and description -->
+							<h5>Project Name</h5>
+							<p>Description goes here</p>
+						</div>
+					</div>
+					<div class="card_content"> <!-- for Content Card -->
+						<div class="card_property">
+							<p style="color: gray;"> Status</p>
+							<p>Value</p>
+						</div>
+						<div class="card_property"> 
+							<p style="color: gray;">Status</p>
+							<p>Value</p>
+						</div>
+						<div class="card_property">
+							<p style="color: gray;">Status</p>
+							<p>Value</p>
+						</div>
+						<div class="card_property">
+							<p style="color: gray;">Status</p>
+							<p>Value</p>
+						</div>
+					</div>
+				</div>
+				<div class="project_card"> <!-- The Card itself -->
+					<div class="card_header"> <!-- for header card -->
+						<p style="background-color: #c86918;padding: 10px;border-radius: 6px;aspect-ratio: 1;">HC</p> <!-- for the Initials -->
+						<div> <!-- for name and description -->
+							<h5>Project Name</h5>
+							<p>Description goes here</p>
+						</div>
+					</div>
+					<div class="card_content"> <!-- for Content Card -->
+						<div class="card_property">
+							<p style="color: gray;"> Status</p>
+							<p>Value</p>
+						</div>
+						<div class="card_property"> 
+							<p style="color: gray;">Status</p>
+							<p>Value</p>
+						</div>
+						<div class="card_property">
+							<p style="color: gray;">Status</p>
+							<p>Value</p>
+						</div>
+						<div class="card_property">
+							<p style="color: gray;">Status</p>
+							<p>Value</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="project_details_page" style="display: none;" class="page">
+			<!-- HEADER -->
+			<header>
+				<div style="padding: 0px 10px;">
+					<h2>Hospital Center</h2>
+					<p style="color:aquamarine">Community hospital located at downtown</p>
+				</div>
+			</header>
+			<!-- Main page content _________________________________________- -->
+			<div class="main_page_content" class="page">
+				<!-- Project details CONTAINER_______________ -->
+				<div style="display: flex; flex-direction:column; row-gap:30px;">
+					<div class="dashboard_card" style="padding:20px;">
+						<!-- Circle title and Edit -->
+						<div style="display: flex; justify-content: space-between; align-items:center; margin-bottom:20px">
+							<!-- <p style="font-size: 21px; background-color:#c86918; aspect-ratio:1; border-radius:100%; padding:15px;">HC</p> -->
+							 <p style="background-color: #c86918; width: 50px; height: 50px; border-radius: 50%; font-size: 20px; font-weight: bold; margin: 0; display: flex; align-items: center; justify-content: center;">HC</p>
+							<button id="btn_prj_details" class="sub_btn">Edit</button>
+						</div>
+						<!-- Title and Subtitle -->
+						<div style="margin-bottom: 20px;">
+							<h4>Hospital Center</h4>
+							<p>Community hospital located at downtown</p>
+						</div>
+						<!-- Details CONTAINER -->
+						 <div class="details_container">
+							<div>
+								<h5>Status</h5>
+								<p>Active</p>
+							</div>
+							<div>
+								<h5>Cost</h5>
+								<p>$2.562.252</p>
+							</div>
+							<div>
+								<h5>Role</h5>
+								<p>Engineer</p>
+							</div>
+							<div>
+								<h5>Finish Date</h5>
+								<p>2026-06-16</p>
+							</div>
+						 </div>
+						 <!-- Barra de Progreso CONTAINER -->
+						 <div class="progress_container">
+    						<div class="progress_bar">
+        						<span class="progress_text">80%</span>
+   							</div>
+						</div>
+					</div>
+					<!-- To-Do CONTAINER ____________________ -->
+					<div class="dashboard_card" style="flex-grow: 1;">
+						<!-- Top Part -->
+						<div style="display: flex; align-items: center; justify-content: space-between; margin-bottom:20px;">
+							<!-- To Do phrase -->
+							<div style="font-weight: bold;">
+								To-Do
+							</div>
+							<!-- Search container -->
+							<div style="display: flex; align-items: center; gap: 15px">
+								<span class="material-icons-outlined">search</span>
+								<input type="text" placeholder="Search To-Do's by name" style="width: 100%; font-size: 12px">
+								<span class="material-icons-outlined">add</span>
+							</div>
+						</div>
+						<!-- Bottom Part -->
+						 <div style="display: flex; flex-direction:column; row-gap: 10px;">
+							<!-- primer Item To-Do -->
+							<div class="to-do_Item">
+								<div style="display: flex; justify-content: space-between; align-items: center;">
+									<div style="display: flex; column-gap: 15px; align-items: center;">
+										<span class="material-icons-outlined" style="padding: 7px; background-color: #adadad; border-radius: 10px;">handyman</span>
+										<p>Put here whatever you want sdfgh fghjk fghjkl dfghjkl fghj fghjkl erftghjkl ertyuikol ertyuiklo fghjkl</p>
+									</div>
+									<p style="text-wrap: nowrap; margin-left: 15px;">Fri, 20 sep</p>
+								</div>
+							</div>
+							<!-- otro Item To-Do -->
+							<div class="to-do_Item">
+								<div style="display: flex; justify-content: space-between; align-items: center;">
+									<div style="display: flex; column-gap: 15px; align-items: center;">
+										<span class="material-icons-outlined" style="padding: 7px; background-color: #adadad; border-radius: 10px;">handyman</span>
+										<p>Put here whatever you want sdfgh fghjk fghjkl dfghjkl fghj fghjkl erftghjkl ertyuikol ertyuiklo fghjkl</p>
+									</div>
+									<p style="text-wrap: nowrap; margin-left: 15px;">Fri, 20 sep</p>
+								</div>
+							</div>
+						 </div>
+					</div>
+				</div>
+				<!-- Viewer CONTAINER________________________ -->
+				<div id="viewer_container" class="dashboard_card">
+
+				</div>
+
+			</div>
+
+		</div>
+		<div id="users_list_page"  class="page">
+			<!-- Form of New User -->
+			 <!-- FORM _________________ -->
+			<dialog id="new_user_modal"> <!-- to create the Modal Container -->
+				<form id="new_user_form"> <!-- to create the Form -->
+					<h2>New User</h2>
+					<div class="input_list">
+						<div class="form_field_container">
+							<label><span class="material-icons-outlined">person</span>Role</label>
+							<select name="role">
+								<option>Architect</option>
+								<option>Engineer</option>
+								<option>Teacher</option>
+							</select>
+						</div>
+						<div class="form_field_container">
+							<label><span class="material-icons-outlined">verified_user</span>Status</label>
+							<select name="status">
+								<option>Active</option>
+								<option>Inactive</option>
+							</select>
+						</div>
+						<div class="form_field_container">
+							<label><span class="material-icons-outlined">badge</span>Name</label>
+							<input name="name" type="text" placeholder="Provide the name of the new user"> <!-- Notice: "input" is a SELFCLOSED tag -->
+						</div>
+						<div class="form_field_container">
+							<label><span class="material-icons-outlined">portrait</span>Username</label>
+							<input name="username" type="text" placeholder="Provide the username of the new user"></textarea>
+						</div>
+						<div class="form_field_container">
+							<label><span class="material-icons-outlined">email</span>Email</label>
+							<input name="email" type="text" placeholder="Provide the email of the new user">
+						</div>
+						<div class="form_field_container">
+							<label><span class="material-icons-outlined">call</span>Telephone</label>
+							<input name="telephone" type="number" placeholder="Provide the telephone number of the new user">
+						</div>
+					</div>
+					<div id="form_buttons">
+						<button id="cancel_user" type="button" class="cancel_btn">Cancel</button>
+						<button id="accept_user" type="submit" class="accept_btn">Accept</button> <!-- type:submit to inform JavaScript this is the submitted btn -->
+					</div>
+				</form>
+			</dialog>
+			<!-- Header -->
+			<header id="list_users_header" style="border-bottom: solid #c7bfbf 2px; padding: 30px 20px 30px">
+				<h2>Users</h2>
+				<div style="display: flex; align-items: center; gap: 15px">
+							<span class="material-icons-outlined">search</span>
+							<input type="text" placeholder="Search User" style="width: 100%; font-size: 11px; height:2.5px">
+							<span id="import_users_btn" class="material-icons-outlined ex-im-files">file_upload</span>
+							<span id="export_users_btn" class="material-icons-outlined ex-im-files">file_download</span>
+
+				</div>
+				<button id="btn_create_user" class="sub_btn">
+					Create User
+				</button>
+			</header>
+			<!-- Titles -->
+			<div class="table_header_titles">
+				<div><p>Role</p></div>
+				<div><p>Status</p></div>
+				<div><p>Name</p></div>
+				<div><p>Username</p></div>
+				<div><p>email</p></div>
+				<div><p>telephone</p></div>
+			</div>
+			<!-- Information (Users Container) -->
+			 <div id="users_list">
+			 </div>
+		</div>
+	</main>
+	<!-- To ERROR POPUP.............. -->
+	 <dialog id="error_modal">
+		<div class="error_modal_content">
+			<div class="error_modal_header">
+				<span class="material-icons-outlined">
+                	error
+            	</span>
+
+            	<h3>Error</h3>
+			</div>
+			<p id="error_message"></p>
+			 <div class="error_modal_footer">
+				<button	type="button" id="close_error_modal" class="accept_btn">
+					Close
+            	</button>
+			</div>
+		</div>
+	 </dialog>
+
+	<!-- to REFERENCE the JavaScript files: -->
+	<!-- type="module", to be able to use the imported files in JavaScript index file -->
+	 <script type="module" src="./src/index.ts"></script>
+</body>
+</html>

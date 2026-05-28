@@ -1,0 +1,255 @@
+
+
+// 1. IMPORTS_____________________________________________________________________________________
+import { User, IUser, roleType, statusType } from "./Class/User"
+import { UsersManager } from "./Class/UsersManager"
+
+
+// This "document" is provided by the Browser, the main purpose is to help us to interact with the DOM
+// DOM = Bridge between the HTML structure and programming languages like JavaScript. It gives super power to webpages to interact with the user and other apps.
+
+
+// DEFINE a function to be used when the btn "new user" is Clicked.................................................
+
+//		Note:In Typescript is needed to define the exact datatype for the args and its Returns. ex:  "id: string"
+
+/* // Function to Show the Form:
+function showForm (id:string):void {
+	// Get the element by the ID passed
+	const modal = document.getElementById(id)
+	// the showModal() method belongs particulary to the sub-element "HTMLDialogElement", so is needed to check it in the IF statement
+	if (modal && modal instanceof HTMLDialogElement){
+		modal.showModal()
+	}
+	else{
+		console.warn("ID passed was not found. ID: ", id)
+	}
+}
+
+// Function to Close the Form:
+function closeForm (id:string):void {
+	// Get the element by the ID passed
+	const modal = document.getElementById(id)
+	// the showModal() method belongs particulary to the sub-element "HTMLDialogElement", so is needed to check it in the IF statement
+	if (modal && modal instanceof HTMLDialogElement){
+		modal.close()
+	}
+	else{
+		console.warn("ID passed was not found. ID: ", id)
+	}
+} */
+
+
+// 2. UTILITY FUNCTIONS___________________________________________________________________________________
+
+// Function Toggle to OPEN or CLOSE the Modal (Form)...............................
+
+function toggleForm(id: string, action: "open" | "close"): void {
+    // Get the element by the ID passed
+    const modal = document.getElementById(id)
+
+    // Check if element exists and is a dialog
+    if (modal && modal instanceof HTMLDialogElement) {
+
+        if (action === "open") {
+            modal.showModal();
+        }
+        else {
+            modal.close();
+        }
+    }
+    else {
+        console.warn("ID passed was not found. ID:", id)
+    }
+}
+
+
+// Functio to show the Error PopUp ...............................................
+function showError(message: string): void {
+	if (errorModal instanceof HTMLDialogElement && errorMessage) {
+		errorMessage.textContent = message
+		errorModal.showModal()
+	}
+}
+
+
+
+
+// 3. DOM REFERENCES________________________________________________________________________________
+
+// Forms................................................
+
+	// Get the form by ID:
+const userForm = document.getElementById("new_user_form")
+
+
+
+// Buttons ..............................................
+
+
+	// SIDEBAR
+	// Get the btns of Projects and Users:
+const btnUsers = document.getElementById("usersBtn");
+const btnProjects = document.getElementById("projectsBtn");
+
+
+
+	// To get the button to create a new User:
+const btnCreateUser = document.getElementById("btn_create_user")
+
+	// if-else statement:
+if(btnCreateUser){
+	//	It "listens" the Event when Cliks the btn:
+	//	Notice: the function passed is called automatiacally, 
+	//		    therefore, it needs to create an ANONIMOUS FUNCTION to call the function previously created and be called after the Event
+	btnCreateUser.addEventListener("click", () => {toggleForm("new_user_modal","open")}) 
+}
+else {
+	console.warn("Button Create User is null")
+}
+
+	// Get the Cancel button
+const cancelBtn = document.getElementById("cancel_user")
+
+	// Get the Button Close Error Modal
+const closeErrorModal =
+document.getElementById("close_error_modal")
+
+
+
+
+
+
+
+// Containers .....................................................
+
+	// Get the Users list UI from the HTML file and check if exists
+const usersListUI = document.getElementById("users_list")
+if(!usersListUI) {throw new Error("userListUI does not exists")}
+
+
+	// Get the Elements for Errors:
+const errorModal = document.getElementById("error_modal")
+
+const errorMessage = document.getElementById("error_message")
+
+
+
+
+// 4. MANAGERS/ INSTANCES_____________________________________________________________________
+
+	// Create an Instance of UsersManager
+const usersManager = new UsersManager(usersListUI);
+
+
+
+// 5. EVENT LISTENERS_________________________________________________________________________
+
+	// Check if the Form exists and is an "HTMLFormElement:"
+if (userForm && userForm instanceof HTMLFormElement){
+	
+	// Forms have an Event called "SUBMIT" when the user clicks one of the designated buttons
+	//	also it passes data through the fn, to catch it is used the arg "e"
+	userForm.addEventListener("submit", (e) => {
+		// To prevent the Default behavior which is to reload the page:
+		e.preventDefault()
+		
+		// To create a new Instance of the Class FormData based on the element form previuosly found
+		const formData = new FormData(userForm)
+		
+		// NOTES: * To get any value of the Formdata element (it has to be named in the INPUT/SELECT container of the HTML file):
+		//        * The fn .get() returns generally "string" type, no matter if you define the type in the HTML file
+		
+		// To CAST from "string" of the .get() to "number"
+		const telephoneRaw = formData.get("telephone")
+		
+		// Definition of an Object based on the info from formData:
+		//		NOTE: Using the word "as" is ONLY recommended when is 100% confirmed the dataype of the "conversion"
+		//			  
+		const userObj: IUser = {
+			role: formData.get("role") as roleType,
+			status: formData.get("status") as statusType,
+			name: formData.get("name") as string,
+			username:formData.get("username") as string,
+			email: formData.get("email") as string,
+			telephone: Number(telephoneRaw) // casted from above
+			//telephone: Number(formData.get("telephone")) // Also could be casted like this
+		}
+		
+		// To intercept the ERRORS:
+		try{
+			// Create a new User using the "usersManager" with the info of the userObject got from the Form
+			const user = usersManager.newUser(userObj);
+			
+			// To Clean up the Form after submitted
+			userForm.reset();
+			
+			// To close the Modal (Form)
+			toggleForm("new_user_modal","close")
+			
+			// to print out in Console
+			console.log(user)
+			
+		}catch(error){
+			// window.alert(error)
+
+			if (error instanceof Error) {
+				showError(error.message)
+			} else {
+				showError("Unknown error occurred")
+			}
+		}
+
+		// To Listen the Btn to close the Error Dialog in the browser
+		if(closeErrorModal && errorModal instanceof HTMLDialogElement){
+			closeErrorModal.addEventListener("click", () => {
+				errorModal.close()
+			})
+		}
+		
+	})
+
+	if(cancelBtn){
+		cancelBtn.addEventListener("click", () => {
+			userForm.reset();
+			toggleForm("new_user_modal", "close");
+			console.log("Form closed by the user. Data discarted")
+		})
+	}
+	else{
+		console.warn("Button Cancel was not found in the structure");
+	}
+
+
+}
+else{
+	console.warn("Form Id was not found. Check the ID form!")
+}
+
+
+// To Export JSON files
+const exportUsersBtn = document.getElementById("export_users_btn");
+if(!exportUsersBtn) {throw new Error("Export button does not exists")}
+else{
+		exportUsersBtn.addEventListener("click", () =>{
+			usersManager.exportToJSON()
+		})
+	}
+
+// To import JSON files
+const importUsersBtn = document.getElementById("import_users_btn");
+if(!importUsersBtn) {throw new Error("Import button does not exist")}
+else{
+		importUsersBtn.addEventListener("click", () =>{
+			usersManager.importFromJSON();
+		})
+	}
+
+
+// To Change Page:
+if(!btnProjects) {throw new Error("Projects Btn (sidebar) does not exist")}
+else{
+	btnProjects.addEventListener("click", () =>{
+		
+	})
+}

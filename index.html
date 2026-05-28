@@ -377,16 +377,115 @@
 			</header>
 			<!-- Titles -->
 			<div class="table_header_titles">
-				<div><p>Role</p></div>
-				<div><p>Status</p></div>
 				<div><p>Name</p></div>
 				<div><p>Username</p></div>
+				<div><p>Role</p></div>
+				<div><p>Status</p></div>
 				<div><p>email</p></div>
 				<div><p>telephone</p></div>
 			</div>
 			<!-- Information (Users Container) -->
 			 <div id="users_list">
 			 </div>
+		</div>
+		<div id="user_details_page" style="display: none;" class="page">
+			<!-- HEADER -->
+			<header>
+				<div style="padding: 0px 10px;">
+					<h2>User 1</h2>
+					<p style="color:aquamarine">Community hospital located at downtown</p>
+				</div>
+			</header>
+			<!-- Main page content _________________________________________- -->
+			<div class="main_page_content" class="page">
+				<!-- Project details CONTAINER_______________ -->
+				<div style="display: flex; flex-direction:column; row-gap:30px;">
+					<div class="dashboard_card" style="padding:20px;">
+						<!-- Circle title and Edit -->
+						<div style="display: flex; justify-content: space-between; align-items:center; margin-bottom:20px">
+							<!-- <p style="font-size: 21px; background-color:#c86918; aspect-ratio:1; border-radius:100%; padding:15px;">HC</p> -->
+							 <p style="background-color: #c86918; width: 50px; height: 50px; border-radius: 50%; font-size: 20px; font-weight: bold; margin: 0; display: flex; align-items: center; justify-content: center;">HC</p>
+							<button id="btn_prj_details" class="sub_btn">Edit</button>
+						</div>
+						<!-- Title and Subtitle -->
+						<div style="margin-bottom: 20px;">
+							<h4>Hospital Center</h4>
+							<p>Community hospital located at downtown</p>
+						</div>
+						<!-- Details CONTAINER -->
+						 <div class="details_container">
+							<div>
+								<h5>Status</h5>
+								<p>Active</p>
+							</div>
+							<div>
+								<h5>Cost</h5>
+								<p>$2.562.252</p>
+							</div>
+							<div>
+								<h5>Role</h5>
+								<p>Engineer</p>
+							</div>
+							<div>
+								<h5>Finish Date</h5>
+								<p>2026-06-16</p>
+							</div>
+						 </div>
+						 <!-- Barra de Progreso CONTAINER -->
+						 <div class="progress_container">
+    						<div class="progress_bar">
+        						<span class="progress_text">80%</span>
+   							</div>
+						</div>
+					</div>
+					<!-- To-Do CONTAINER ____________________ -->
+					<div class="dashboard_card" style="flex-grow: 1;">
+						<!-- Top Part -->
+						<div style="display: flex; align-items: center; justify-content: space-between; margin-bottom:20px;">
+							<!-- To Do phrase -->
+							<div style="font-weight: bold;">
+								To-Do
+							</div>
+							<!-- Search container -->
+							<div style="display: flex; align-items: center; gap: 15px">
+								<span class="material-icons-outlined">search</span>
+								<input type="text" placeholder="Search To-Do's by name" style="width: 100%; font-size: 12px">
+								<span class="material-icons-outlined">add</span>
+							</div>
+						</div>
+						<!-- Bottom Part -->
+						 <div style="display: flex; flex-direction:column; row-gap: 10px;">
+							<!-- primer Item To-Do -->
+							<div class="to-do_Item">
+								<div style="display: flex; justify-content: space-between; align-items: center;">
+									<div style="display: flex; column-gap: 15px; align-items: center;">
+										<span class="material-icons-outlined" style="padding: 7px; background-color: #adadad; border-radius: 10px;">handyman</span>
+										<p>Put here whatever you want sdfgh fghjk fghjkl dfghjkl fghj fghjkl erftghjkl ertyuikol ertyuiklo fghjkl</p>
+									</div>
+									<p style="text-wrap: nowrap; margin-left: 15px;">Fri, 20 sep</p>
+								</div>
+							</div>
+							<!-- otro Item To-Do -->
+							<div class="to-do_Item">
+								<div style="display: flex; justify-content: space-between; align-items: center;">
+									<div style="display: flex; column-gap: 15px; align-items: center;">
+										<span class="material-icons-outlined" style="padding: 7px; background-color: #adadad; border-radius: 10px;">handyman</span>
+										<p>Put here whatever you want sdfgh fghjk fghjkl dfghjkl fghj fghjkl erftghjkl ertyuikol ertyuiklo fghjkl</p>
+									</div>
+									<p style="text-wrap: nowrap; margin-left: 15px;">Fri, 20 sep</p>
+								</div>
+							</div>
+						 </div>
+					</div>
+				</div>
+
+				<!-- Viewer CONTAINER________________________ -->
+			<!--<div id="viewer_container" class="dashboard_card">
+
+				</div> -->
+
+			</div>
+
 		</div>
 	</main>
 	<!-- To ERROR POPUP.............. -->

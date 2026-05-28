@@ -24,10 +24,10 @@ export class UsersManager{
 	// To Create the Default User
 	private createDefUser():void{
 		const userDefData:IUser = {
-			role:"Architect",
-			status:"Active",
 			name:"Default",
 			username:"Default",
+			role:"Architect",
+			status:"Active",
 			email:"Default",
 			telephone:0
 		}
@@ -56,7 +56,7 @@ export class UsersManager{
 		user.ui.addEventListener("click", () =>{
 			// Geth the pages from DOM
 			const usersPage = document.getElementById("users_list_page")
-			const detailsProjectsPage = document.getElementById("project_details_page")
+			const detailsProjectsPage = document.getElementById("user_details_page")
 
 			if(!usersPage || !detailsProjectsPage) {return} // The Check
 

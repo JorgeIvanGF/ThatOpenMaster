@@ -64,7 +64,7 @@ export class User implements IUser{
 	// }
 
 
-	// To define a METHOD to create the UI.............................................................................
+	// To define a METHOD to create the User Card UI.............................................................................
 	//           NOTE: without using the keyword "function" bc is inside the Class 
 	//                (it already knows is a function)
 	setUI() {

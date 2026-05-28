@@ -319,6 +319,14 @@ form .form_field_container label {
 	height: 100%;
 }
 
+#user_details_page > .main_page_content{
+	display: grid;
+	padding: 20px 30px;
+	gap: 10px;
+	grid-template-columns: 450px 1fr;
+	height: 100%;
+}
+
 .sub_btn {
     background-color: var(--background_content_100);
     border-width: 1.8px;
@@ -439,6 +447,10 @@ form .form_field_container label {
 	justify-content: center;
 	padding: 9px;
 	overflow: hidden; /* Evita que el correo empuje las paredes del div */
+}
+
+.info_users_card:hover{
+	background-color: var(--primary_200);
 }
 
 .info_users_card > div > p {

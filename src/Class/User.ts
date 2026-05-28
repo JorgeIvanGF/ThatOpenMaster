@@ -77,10 +77,10 @@ export class User implements IUser{
 			this.ui.className = "info_users_card"
 			// To define the structure of the content of the element:
 			this.ui.innerHTML= `		
-			<div><p>${this.role}</p></div>
-			<div><p>${this.status}</p></div>
 			<div><p>${this.name}</p></div>
 			<div><p>${this.username}</p></div>
+			<div><p>${this.role}</p></div>
+			<div><p>${this.status}</p></div>
 			<div><p>${this.email}</p></div>
 			<div><p>${this.telephone}</p></div>
 			`

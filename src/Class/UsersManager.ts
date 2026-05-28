@@ -62,6 +62,8 @@ export class UsersManager{
 
 			usersPage.style.display="none"; // Hide the users page
 			detailsProjectsPage.style.display="flex"; // Show the Details Page
+
+			this.setUserDetailsPage()
 		})
 		
 
@@ -159,12 +161,13 @@ export class UsersManager{
 		})
 
 		// When the real "action" begins
-		input.click();
-		 
+		input.click();		 
 	}
 
 
-	
+	setUserDetailsPage(){
+
+	}
 
 
 

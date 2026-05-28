@@ -63,7 +63,7 @@ export class UsersManager{
 			usersPage.style.display="none"; // Hide the users page
 			detailsProjectsPage.style.display="flex"; // Show the Details Page
 
-			this.setUserDetailsPage()
+			this.setUserDetailsPage(user)
 		})
 		
 
@@ -165,8 +165,13 @@ export class UsersManager{
 	}
 
 
-	setUserDetailsPage(){
+	private setUserDetailsPage(user : User){
+		// get the Rference of the Master Element that contains the element targeted
+		const userDetailsPage = document.getElementById("user_details_page");
+		if(!userDetailsPage) {return}
 
+		const name = userDetailsPage.querySelector("[data-user-info='name']")
+		if(name) {name.textContent = user.name }
 	}
 
 

@@ -11,13 +11,14 @@ export class UsersManager{
 
 	list: User[] = [];	//	Define the Property List of users
 	ui: HTMLElement; 	// The container to storage all the users cards created
-
+	private onUserClickCallback?: (user: User) => void; // To save the action in a centralized way
 
 	//	METHODS...................................
 
 	// Constructor:
-	constructor(container:HTMLElement){
+	constructor(container:HTMLElement, onUserClick?: (user: User) => void){
 		this.ui = container;
+		this.onUserClickCallback = onUserClick; // Guardamos la acción
 		this.createDefUser();
 	}
 
@@ -51,21 +52,13 @@ export class UsersManager{
 		if (!user.ui) {throw new Error("Cannot append a user card that has no UI defined.")}
 		// Now we know 100% that user.ui is NOT null
 
-		//To CHANGE BETWEEN PAGES .......................................
-		// The register the event
-		user.ui.addEventListener("click", () =>{
-			// Geth the pages from DOM
-			const usersPage = document.getElementById("users_list_page")
-			const detailsProjectsPage = document.getElementById("user_details_page")
-
-			if(!usersPage || !detailsProjectsPage) {return} // The Check
-
-			usersPage.style.display="none"; // Hide the users page
-			detailsProjectsPage.style.display="flex"; // Show the Details Page
-
-			this.setUserDetailsPage(user)
-		})
-		
+		// ONLY works If the USER clicks on an user
+		if(this.onUserClickCallback){
+			user.ui.addEventListener("click", () => {
+				this.setUserDetailsPage(user); // To fill the info with the Details of the selected user
+				this.onUserClickCallback!(user); // the "!" to assure the FN exists. To execute the page change
+			})
+		}
 
 		this.ui.append(user.ui) // To place and Show it in the Browser Container
 		this.list.push(user); // "push" to insert a new object in the List (array)
@@ -165,6 +158,7 @@ export class UsersManager{
 	}
 
 
+	// To show the selected user details info
 	private setUserDetailsPage(user : User){
 		// get the Reference of the Master Element that contains the element targeted
 		const userDetailsPage = document.getElementById("user_details_page");
@@ -180,6 +174,7 @@ export class UsersManager{
 
 	}
 
+	// Helper
 	private changeDetails(user:User){
 		// Get Details:
 		const userTitle = document.querySelector('[data-title-user="title"]')

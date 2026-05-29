@@ -166,14 +166,38 @@ export class UsersManager{
 
 
 	private setUserDetailsPage(user : User){
-		// get the Rference of the Master Element that contains the element targeted
+		// get the Reference of the Master Element that contains the element targeted
 		const userDetailsPage = document.getElementById("user_details_page");
 		if(!userDetailsPage) {return}
 
+		// Select the custom attribute created in the HTML
 		const name = userDetailsPage.querySelector("[data-user-info='name']")
 		if(name) {name.textContent = user.name }
+
+		// Change the Info
+		this.changeDetails(user)
+
+
 	}
 
+	private changeDetails(user:User){
+		// Get Details:
+		const userTitle = document.querySelector('[data-title-user="title"]')
+		const userSubtitle = document.querySelector('[data-subtitle-user="subtitle"]')
+		const role = document.querySelector('[data-field="role"]')
+		const status = document.querySelector('[data-field="status"]')
+		const email = document.querySelector('[data-field="email"]')
+		const telephone = document.querySelector('[data-field="telephone"]')
+
+		// Changes
+		if(userTitle){userTitle.textContent = user.name}
+		if(userSubtitle){userSubtitle.textContent = user.username}
+		if(role) {role.textContent = user.role};
+		if(status) {status.textContent = user.status};
+		if(email) {email.textContent = user.email};
+		if(telephone) {telephone.textContent = String(user.telephone)};
+		
+	}
 
 
 }

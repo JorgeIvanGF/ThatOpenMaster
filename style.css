@@ -369,6 +369,34 @@ form .form_field_container label {
     text-align: center;
 }
 
+
+/* USER DETAILS CONTAINER */
+.user_details_container{
+	display: flex;
+	width: 100%;
+}
+
+.user_details_container > div {
+    flex: 1; /* Esto obliga a los 4 divs a estirarse y dividirse el espacio en partes exactamente iguales */	
+}
+.user_details_container > div > p {
+    font-size: 14px; /* Modifica el tamaño de la fuente */	
+}
+
+/* 🚀 LA MAGIA DE LAS ALINEACIONES COMIENZA AQUÍ: */
+/* El primero de todos alineado a la izquierda */
+.user_details_container > div:first-child {
+    text-align: left;
+}
+/* El último de todos alineado a la derecha */
+.user_details_container > div:last-child {
+    text-align: right;
+}
+/* Los contenedores que NO sean ni el primero ni el último se alinean al centro */
+.user_details_container > div:not(:first-child):not(:last-child) {
+    text-align: center;
+}
+
 /* BARRA DE PROGRESO */
 /* 1. El fondo de la barra (Gris oscuro) */
 .progress_container {

@@ -303,6 +303,11 @@ form .form_field_container label {
 	height: 100%;
 }
 
+/* The "SWITCH" to hide a page*/
+.page.hidden { /* it says have BOTH classes together */
+    display: none !important; /* "!important" means this rule is OVER any other*/
+} 
+
 .dashboard_card{
 	background-color: var(--background_content_100);
 	border-radius: 10px;

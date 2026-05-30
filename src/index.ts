@@ -43,7 +43,6 @@ function closeForm (id:string):void {
 // 2. UTILITY FUNCTIONS___________________________________________________________________________________
 
 // Function Toggle to OPEN or CLOSE the Modal (Form)...............................
-
 function toggleForm(id: string, action: "open" | "close"): void {
     // Get the element by the ID passed
     const modal = document.getElementById(id)
@@ -64,7 +63,7 @@ function toggleForm(id: string, action: "open" | "close"): void {
 }
 
 
-// Functio to show the Error PopUp ...............................................
+// Function to show the Error PopUp ...............................................
 function showError(message: string): void {
 	if (errorModal instanceof HTMLDialogElement && errorMessage) {
 		errorMessage.textContent = message
@@ -72,6 +71,30 @@ function showError(message: string): void {
 	}
 }
 
+
+// FN to change to target Page...................................................
+function navigateToPage(targetPageId: string): void {
+
+    // 1. Get ALL the pages using the class "page" inside "content" element
+	const allPages = document.querySelectorAll("#content .page");
+
+    // 2. Switch off ALL the pages 
+    allPages.forEach(page => {   
+		// Check if is HTMLELement
+        if (page instanceof HTMLElement) {
+            page.classList.add("hidden"); // Add the hidden class to the page
+        }
+    });
+
+    // 3. Switch ON only the targetpage using the ID and removing the "hidden" class
+    const targetPage = document.getElementById(targetPageId);
+    if (targetPage && targetPage instanceof HTMLElement) {
+        targetPage.classList.remove("hidden");
+        console.log(`Navegando exitosamente a: ${targetPageId}`);
+    } else {
+        console.warn(`La página con ID: ${targetPageId} no existe en el DOM.`);
+    }
+}
 
 
 
@@ -139,7 +162,7 @@ const errorMessage = document.getElementById("error_message")
 // 4. MANAGERS/ INSTANCES_____________________________________________________________________
 
 	// Define the global action to change to Details page only ONCE
-const changeToUserDetailsPage = (selectedUser: User) => {
+/* const changeToUserDetailsPage = (selectedUser: User) => {
     const usersPage = document.getElementById("users_list_page");
     const detailsUserPage = document.getElementById("user_details_page");
 
@@ -148,8 +171,14 @@ const changeToUserDetailsPage = (selectedUser: User) => {
         detailsUserPage.style.display = "flex";
     }
     console.log(`Cambiando a la página de detalles de: ${selectedUser.name}`);
-};
+}; */
 
+
+	// Define the global action to change to Details page only ONCE
+const changeToUserDetailsPage = (selectedUser: User) => {
+    navigateToPage("user_details_page"); 
+    console.log(`Cambiando a la página de detalles de: ${selectedUser.name}`);
+};
 
 	// Create an Instance of UsersManager
 const usersManager = new UsersManager(usersListUI, changeToUserDetailsPage);
@@ -260,19 +289,20 @@ else{
 	}
 
 
-// To Change Page:
-if(!btnUsers) {throw new Error("Projects Btn (sidebar) does not exist")}
+// To Change Page from Side bar Buttons:
+if(!btnUsers) { throw new Error("Users Btn (sidebar) does not exist") }
 else{
-	btnUsers.addEventListener("click", () =>{
-		btnUsers.addEventListener("click", () =>{
-		const usersPage = document.getElementById("users_list_page");
-		const detailsUserPage = document.getElementById("user_details_page");
-
-		if (usersPage && detailsUserPage) {
-			usersPage.style.display = "flex";
-			detailsUserPage.style.display = "none";
-		}
-		console.log(`Cambiando a la página de detalles a Lista de Usuarios}`);
-			})
-	})
+    btnUsers.addEventListener("click", () => {
+        navigateToPage("users_list_page");
+    })
 }
+
+if(!btnProjects) { console.warn("Projects Btn (sidebar) does not exist") }
+else{
+    btnProjects.addEventListener("click", () => {
+        navigateToPage("projects_list_page");
+    })
+}
+
+// To start by Default the page in the Projects List Page:
+navigateToPage("projects_list_page");

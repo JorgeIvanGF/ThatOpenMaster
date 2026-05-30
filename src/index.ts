@@ -138,8 +138,21 @@ const errorMessage = document.getElementById("error_message")
 
 // 4. MANAGERS/ INSTANCES_____________________________________________________________________
 
+	// Define the global action to change to Details page only ONCE
+const changeToUserDetailsPage = (selectedUser: User) => {
+    const usersPage = document.getElementById("users_list_page");
+    const detailsUserPage = document.getElementById("user_details_page");
+
+    if (usersPage && detailsUserPage) {
+        usersPage.style.display = "none";
+        detailsUserPage.style.display = "flex";
+    }
+    console.log(`Cambiando a la página de detalles de: ${selectedUser.name}`);
+};
+
+
 	// Create an Instance of UsersManager
-const usersManager = new UsersManager(usersListUI);
+const usersManager = new UsersManager(usersListUI, changeToUserDetailsPage);
 
 
 
@@ -179,7 +192,8 @@ if (userForm && userForm instanceof HTMLFormElement){
 		// To intercept the ERRORS:
 		try{
 			// Create a new User using the "usersManager" with the info of the userObject got from the Form
-			const user = usersManager.newUser(userObj);
+			// As usersManager already has the given FN to chg the pages, we can call it clean here
+			const user = usersManager.newUser(userObj)
 			
 			// To Clean up the Form after submitted
 			userForm.reset();
@@ -247,9 +261,18 @@ else{
 
 
 // To Change Page:
-if(!btnProjects) {throw new Error("Projects Btn (sidebar) does not exist")}
+if(!btnUsers) {throw new Error("Projects Btn (sidebar) does not exist")}
 else{
-	btnProjects.addEventListener("click", () =>{
-		
+	btnUsers.addEventListener("click", () =>{
+		btnUsers.addEventListener("click", () =>{
+		const usersPage = document.getElementById("users_list_page");
+		const detailsUserPage = document.getElementById("user_details_page");
+
+		if (usersPage && detailsUserPage) {
+			usersPage.style.display = "flex";
+			detailsUserPage.style.display = "none";
+		}
+		console.log(`Cambiando a la página de detalles a Lista de Usuarios}`);
+			})
 	})
 }

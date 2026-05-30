@@ -31,7 +31,7 @@
 	</aside>
 	<!-- Main Content__________________________________________________________________________ -->
 	<main id="content">
-		<div id="projects_list_page" style="display: none;" >
+		<div id="projects_list_page"  >
 			<!-- FORM _________________ -->
 			<dialog id="new_project_modal"> <!-- to create the Modal Container -->
 				<form> <!-- to create the Form -->
@@ -316,13 +316,21 @@
 			</div>
 
 		</div>
-		<div id="users_list_page"  class="page">
+		<div id="users_list_page" style="display: none;" class="page">
 			<!-- Form of New User -->
 			 <!-- FORM _________________ -->
 			<dialog id="new_user_modal"> <!-- to create the Modal Container -->
 				<form id="new_user_form"> <!-- to create the Form -->
 					<h2>New User</h2>
 					<div class="input_list">
+						<div class="form_field_container">
+							<label><span class="material-icons-outlined">badge</span>Name</label>
+							<input name="name" type="text" placeholder="Provide the name of the new user"> <!-- Notice: "input" is a SELFCLOSED tag -->
+						</div>
+						<div class="form_field_container">
+							<label><span class="material-icons-outlined">portrait</span>Username</label>
+							<input name="username" type="text" placeholder="Provide the username of the new user"></textarea>
+						</div>
 						<div class="form_field_container">
 							<label><span class="material-icons-outlined">person</span>Role</label>
 							<select name="role">
@@ -337,14 +345,6 @@
 								<option>Active</option>
 								<option>Inactive</option>
 							</select>
-						</div>
-						<div class="form_field_container">
-							<label><span class="material-icons-outlined">badge</span>Name</label>
-							<input name="name" type="text" placeholder="Provide the name of the new user"> <!-- Notice: "input" is a SELFCLOSED tag -->
-						</div>
-						<div class="form_field_container">
-							<label><span class="material-icons-outlined">portrait</span>Username</label>
-							<input name="username" type="text" placeholder="Provide the username of the new user"></textarea>
 						</div>
 						<div class="form_field_container">
 							<label><span class="material-icons-outlined">email</span>Email</label>
@@ -392,8 +392,8 @@
 			<!-- HEADER -->
 			<header>
 				<div style="padding: 0px 10px;">
-					<h2>User 1</h2>
-					<p style="color:aquamarine">Community hospital located at downtown</p>
+					<h2 data-user-info="name">User 1</h2> <!-- creating a custom atribute "user-info" with the value "name" -->
+					<p id="subttl-username" style="color:aquamarine">Community hospital located at downtown</p>
 				</div>
 			</header>
 			<!-- Main page content _________________________________________- -->
@@ -409,26 +409,26 @@
 						</div>
 						<!-- Title and Subtitle -->
 						<div style="margin-bottom: 20px;">
-							<h4>Hospital Center</h4>
-							<p>Community hospital located at downtown</p>
+							<h4 data-title-user="title">Hospital Center</h4>
+							<p data-subtitle-user="subtitle">Community hospital located at downtown</p>
 						</div>
 						<!-- Details CONTAINER -->
-						 <div class="details_container">
+						 <div class="user_details_container">
+							 <div>
+								 <h5>Role</h5>
+								 <p data-field="role">Engineer</p>
+							 </div>
 							<div>
 								<h5>Status</h5>
-								<p>Active</p>
+								<p data-field="status">Active</p>
 							</div>
 							<div>
-								<h5>Cost</h5>
-								<p>$2.562.252</p>
+								<h5>Email</h5>
+								<p data-field="email">jiguf@hotmail.com</p>
 							</div>
 							<div>
-								<h5>Role</h5>
-								<p>Engineer</p>
-							</div>
-							<div>
-								<h5>Finish Date</h5>
-								<p>2026-06-16</p>
+								<h5>Telephone</h5>
+								<p data-field="telephone">6157845</p>
 							</div>
 						 </div>
 						 <!-- Barra de Progreso CONTAINER -->

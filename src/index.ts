@@ -44,22 +44,15 @@ function closeForm (id:string):void {
 
 // Function Toggle to OPEN or CLOSE the Modal (Form)...............................
 function toggleForm(id: string, action: "open" | "close"): void {
-    // Get the element by the ID passed
-    const modal = document.getElementById(id)
+	// Get the element by the ID passed
+	const modal = document.getElementById(id)
 
-    // Check if element exists and is a dialog
-    if (modal && modal instanceof HTMLDialogElement) {
-
-        if (action === "open") {
-            modal.showModal();
-        }
-        else {
-            modal.close();
-        }
-    }
-    else {
-        console.warn("ID passed was not found. ID:", id)
-    }
+	// Check if element exists and is a dialog element
+	if (modal && modal instanceof HTMLDialogElement) {
+		if (action === "open") {modal.showModal()}
+		else {modal.close()}
+	}
+	else {console.warn("ID passed was not found. ID:", id)}
 }
 
 
@@ -75,86 +68,90 @@ function showError(message: string): void {
 // FN to change to target Page...................................................
 function navigateToPage(targetPageId: string): void {
 
-    // 1. Get ALL the pages using the class "page" inside "content" element
+	// 1. Get ALL the pages using the class "page" inside "content" element
 	const allPages = document.querySelectorAll("#content .page");
 
-    // 2. Switch off ALL the pages 
-    allPages.forEach(page => {   
+	// 2. Switch off ALL the pages 
+	allPages.forEach(page => {   
 		// Check if is HTMLELement
-        if (page instanceof HTMLElement) {
-            page.classList.add("hidden"); // Add the hidden class to the page
-        }
-    });
+		if (page instanceof HTMLElement) {
+			page.classList.add("hidden"); // Add the hidden class to the page
+		}
+	});
 
-    // 3. Switch ON only the targetpage using the ID and removing the "hidden" class
-    const targetPage = document.getElementById(targetPageId);
-    if (targetPage && targetPage instanceof HTMLElement) {
-        targetPage.classList.remove("hidden");
-        console.log(`Navegando exitosamente a: ${targetPageId}`);
-    } else {
-        console.warn(`La página con ID: ${targetPageId} no existe en el DOM.`);
-    }
+	// 3. Switch ON only the targetpage using the ID and removing the "hidden" class
+	const targetPage = document.getElementById(targetPageId);
+	if (targetPage && targetPage instanceof HTMLElement) {
+		targetPage.classList.remove("hidden");
+		console.log(`Navegando exitosamente a: ${targetPageId}`);
+	} else {
+		console.warn(`La página con ID: ${targetPageId} no existe en el DOM.`);
+	}
 }
 
 
 
 // 3. DOM REFERENCES________________________________________________________________________________
 
-// Forms................................................
+// FORMS:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-	// Get the form by ID:
+	// Get the forms by ID:
 const userForm = document.getElementById("new_user_form")
+const projectForm = document.getElementById("new_project_form")
 
 
 
-// Buttons ..............................................
+// BUTTONS :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-
-	// SIDEBAR
+	// SIDEBAR----------------------------------------------------------
 	// Get the btns of Projects and Users:
 const btnUsers = document.getElementById("usersBtn");
 const btnProjects = document.getElementById("projectsBtn");
 
 
-
-	// To get the button to create a new User:
+	// NEW USER / PROJECT BUTTONS---------------------------------------
+	// To get the buttons to create a new User/Project:
 const btnCreateUser = document.getElementById("btn_create_user")
+const btnCreateProject = document.getElementById("btn_create_project")
 
-	// if-else statement:
+		// For USER
 if(btnCreateUser){
 	//	It "listens" the Event when Cliks the btn:
 	//	Notice: the function passed is called automatiacally, 
 	//		    therefore, it needs to create an ANONIMOUS FUNCTION to call the function previously created and be called after the Event
 	btnCreateUser.addEventListener("click", () => {toggleForm("new_user_modal","open")}) 
 }
-else {
-	console.warn("Button Create User is null")
-}
-
+else {console.warn("Button Create User is null")}
 	// Get the Cancel button
-const cancelBtn = document.getElementById("cancel_user")
+const cancelUserBtn = document.getElementById("cancel_user")
+
+
+		// For PROJECT
+if(btnCreateProject){btnCreateProject.addEventListener("click", () => {toggleForm("new_project_modal","open")})}
+else{console.warn("Button Create Project is null")}
+const cancelProjectBtn = document.getElementById("cancel_project")
+
+
+// ERRORS-------------------------------------------------------------
 
 	// Get the Button Close Error Modal
-const closeErrorModal =
-document.getElementById("close_error_modal")
+const closeErrorModal = document.getElementById("close_error_modal")
+
+	// Get the Elements for Errors:
+const errorModal = document.getElementById("error_modal") // The Modal
+const errorMessage = document.getElementById("error_message") // The Message
 
 
 
-
-
-
-
-// Containers .....................................................
+// CONTAINERS:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 	// Get the Users list UI from the HTML file and check if exists
 const usersListUI = document.getElementById("users_list")
 if(!usersListUI) {throw new Error("userListUI does not exists")}
 
-
-	// Get the Elements for Errors:
-const errorModal = document.getElementById("error_modal")
-
-const errorMessage = document.getElementById("error_message")
+	// Get the Projects list UI from the HTML file and check if exists
+const projectsListUI = document.getElementById("projects_list")
+if(!projectsListUI) {throw new Error("projectListUI does not exists")}
 
 
 
@@ -162,22 +159,9 @@ const errorMessage = document.getElementById("error_message")
 // 4. MANAGERS/ INSTANCES_____________________________________________________________________
 
 	// Define the global action to change to Details page only ONCE
-/* const changeToUserDetailsPage = (selectedUser: User) => {
-    const usersPage = document.getElementById("users_list_page");
-    const detailsUserPage = document.getElementById("user_details_page");
-
-    if (usersPage && detailsUserPage) {
-        usersPage.style.display = "none";
-        detailsUserPage.style.display = "flex";
-    }
-    console.log(`Cambiando a la página de detalles de: ${selectedUser.name}`);
-}; */
-
-
-	// Define the global action to change to Details page only ONCE
 const changeToUserDetailsPage = (selectedUser: User) => {
-    navigateToPage("user_details_page"); 
-    console.log(`Cambiando a la página de detalles de: ${selectedUser.name}`);
+	navigateToPage("user_details_page"); 
+	console.log(`Cambiando a la página de detalles de: ${selectedUser.name}`);
 };
 
 	// Create an Instance of UsersManager
@@ -252,8 +236,8 @@ if (userForm && userForm instanceof HTMLFormElement){
 		
 	})
 
-	if(cancelBtn){
-		cancelBtn.addEventListener("click", () => {
+	if(cancelUserBtn){
+		cancelUserBtn.addEventListener("click", () => {
 			userForm.reset();
 			toggleForm("new_user_modal", "close");
 			console.log("Form closed by the user. Data discarted")
@@ -292,16 +276,16 @@ else{
 // To Change Page from Side bar Buttons:
 if(!btnUsers) { throw new Error("Users Btn (sidebar) does not exist") }
 else{
-    btnUsers.addEventListener("click", () => {
-        navigateToPage("users_list_page");
-    })
+	btnUsers.addEventListener("click", () => {
+		navigateToPage("users_list_page");
+	})
 }
 
 if(!btnProjects) { console.warn("Projects Btn (sidebar) does not exist") }
 else{
-    btnProjects.addEventListener("click", () => {
-        navigateToPage("projects_list_page");
-    })
+	btnProjects.addEventListener("click", () => {
+		navigateToPage("projects_list_page");
+	})
 }
 
 // To start by Default the page in the Projects List Page:

@@ -34,7 +34,7 @@
 		<div id="projects_list_page" class="page"  >
 			<!-- FORM _________________ -->
 			<dialog id="new_project_modal"> <!-- to create the Modal Container -->
-				<form> <!-- to create the Form -->
+				<form id="new_project_form"> <!-- to create the Form -->
 					<h2>New Project</h2>
 					<div class="input_list">
 						<div class="form_field_container">
@@ -76,11 +76,11 @@
 			<header id="page_header">
 				<h2>Projects</h2>
 				<div>
-					<button>New Project</button>
+					<button id="btn_create_project">Create Project</button>
 				</div>
 			</header>
 			<!-- PROJECT LIST ________________ -->
-			<div id="project_list"> <!-- List of Cards -->
+			<div id="projects_list"> <!-- List of Cards -->
 				<div class="project_card"> <!-- The Card itself -->
 					<div class="card_header"> <!-- for header card -->
 						<p style="background-color: #c86918;padding: 10px;border-radius: 6px;aspect-ratio: 1;">HC</p> <!-- for the Initials -->

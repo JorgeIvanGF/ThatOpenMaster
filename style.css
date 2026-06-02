@@ -209,7 +209,7 @@ header {
 }
 
 /* 🚀 NUEVO: Control estricto para el título y la descripción de la tarjeta */
-.card_header h3, .card_header h4 {
+.card_header h3, .card_header h4, .card_header h5{
     margin: 0;
     font-size: var(--font_xl);
     white-space: nowrap;      /* Fuerza al título a estar en una sola línea */

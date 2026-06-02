@@ -14,6 +14,7 @@ export interface IProject {
 	status: ProjectStatus
 	userRole: UserRole
 	finishDate: Date
+	id?: string //optional, because it will be generated in the constructor if not provided
 	progress?: number // Optional, because it will be added later in the process
 }
 
@@ -62,9 +63,19 @@ export class Project implements IProject {
 	if (this.ui) {throw new Error("UI already exists")}
 	this.ui = document.createElement("div")
 	this.ui.className = "project_card"
+
+
+// 🚀 CÁLCULO DINÁMICO DE INICIALES:
+	// Si tiene más de una palabra ("Planta Solar"), toma las dos primeras letras: "PS"
+	// Si es una sola palabra ("Casa"), toma sus dos primeras letras en mayúscula: "CA"
+	const words = this.name.trim().split(/\s+/);
+	const initials = words.length > 1 
+		? (words[0][0] + words[1][0]).toUpperCase()
+		: this.name.substring(0, 2).toUpperCase();
+
 	this.ui.innerHTML = `
 	<div class="card_header">
-		<p data-project-info="initials">HC</p>
+		<p data-project-info="initials">${initials}</p>
 		<div>
 		<h5>${this.name}</h5>
 		<p data-project-info="description-cards">${this.description}</p>

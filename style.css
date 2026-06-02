@@ -20,6 +20,8 @@
 	--background_content_200: #d9d4d4;
 	--background_sidebar: #454545;
 	--background_card: #2c2c2c;
+	--background_card_100: #535353;
+	--background_card_200: #7b7b7b;
 
 	/* FONT SIZES _____________________________ */
 	--font_xs: 10px;
@@ -164,7 +166,7 @@ header {
 
 /* __________________________________________________
 /* For Project List horizontally displayed*/
-#project_list {
+#projects_list {
 	display: grid;
 	padding: 20px;
 	/* Crea columnas de mínimo 240px y máximo lo que sobre de espacio */
@@ -175,7 +177,7 @@ header {
 
 /* For Style PROJECT CARDS __________________________________ */
 .project_card{
-	background-color: var(--background_card);
+	background-color: var(--background_card_100);
 	border-radius: 10px;
 	padding: 10px;
 	cursor: pointer;
@@ -184,23 +186,72 @@ header {
 	outline: 3px solid var(--primary);
 }
 
-/* For card header*/
+/* ***********************   CARDS   ************************************ */
+
 .card_header {
-	display: flex;
-	column-gap: 30px;
-	padding: 15px 20px;
-	justify-content: flex-start;
-	align-items: center;
-	border-bottom: 2px solid#cacaca;
-	height: 40px;
+    display: flex;
+    column-gap: 15px; /* Reducido un poco para dar más espacio al texto */
+    padding: 15px 20px;
+    justify-content: flex-start;
+    align-items: center;
+    border-bottom: 2px solid #cacaca;
+    
+    /* 🚀 CAMBIO CLAVE: Quitamos height fijo y usamos min-height o dejamos que respire */
+    min-height: 50px; 
 }
+
+/* Modifica el contenedor del texto dentro del header */
+.card_header div {
+    display: flex;
+    flex-direction: column;
+    min-width: 0; /* Permite que los textos internos se enteren del ancho real */
+    flex-grow: 1; /* Hace que use todo el espacio restante */
+}
+
+/* 🚀 NUEVO: Control estricto para el título y la descripción de la tarjeta */
+.card_header h3, .card_header h4 {
+    margin: 0;
+    font-size: var(--font_xl);
+    white-space: nowrap;      /* Fuerza al título a estar en una sola línea */
+    overflow: hidden;         /* Oculta lo sobrante */
+    text-overflow: ellipsis;  /* Agrega el "..." si es muy largo */
+}
+
+[data-project-info="initials"] {
+	/* background-color: #ca8134; */
+	background-color: #30e7a1;
+	padding: 10px;
+	border-radius: 8px;
+	aspect-ratio: 1;
+	color: #ffffff;
+    font-size: var(--font_3xl);
+	font-weight: bold;
+	text-align: center;
+}
+
+[data-project-info="description-cards"]{
+	color: #b7b7b7;
+    font-size: var(--font_sm);
+    margin-top: 2px;
+    
+    /* 🚀 EFECTO TRUNCADO MULTILÍNEA: Corta a máximo 2 líneas y pone "..." */
+    display: -webkit-box;
+    -webkit-line-clamp: 2; 
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    
+    /* Seguridad por si escriben una palabra gigante sin espacios */
+    word-break: break-all;
+}
+
 
 .card_content {
 	display: flex;
 	flex-direction: column;
-	row-gap: 30px;
+	row-gap: 12px;
 	align-items: start;
-	padding: 10px 20px;
+	padding: 10px 20px;	
 }
 
 /* for card property */
@@ -303,12 +354,28 @@ form .form_field_container label {
 	height: 100%;
 }
 
+/* The "SWITCH" to hide a page*/
+.page.hidden { /* it says have BOTH classes together */
+    display: none !important; /* "!important" means this rule is OVER any other*/
+} 
+
 .dashboard_card{
-	background-color: var(--background_content_100);
+	background-color: var(--background_card_100);
 	border-radius: 10px;
 	display: flex;
 	flex-direction: column;
 	padding: 20px;
+}
+.dashboard_card.viewer{
+	background-color: var(--background_card);
+
+}
+
+#project_details_page header{
+	padding: 30px 20px 0px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
 }
 
 #project_details_page > .main_page_content{
@@ -414,7 +481,7 @@ form .form_field_container label {
     height: 100%;                 /* Ocupa todo el alto del padre */
     background-color: #00aa00;    /* Color verde brillante */
     border-radius: 14px;          /* Mismo redondeado para que encaje perfecto */
-	width: 80%;                   /* El porcentaje ocupado del Padre
+	/* width: 80%;   */                 /* El porcentaje ocupado del Padre
     
     /* Flexbox aquí para centrar el texto "80%" vertical y horizontalmente */
     display: flex;

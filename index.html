@@ -31,23 +31,23 @@
 	</aside>
 	<!-- Main Content__________________________________________________________________________ -->
 	<main id="content">
-		<div id="projects_list_page"  >
+		<div id="projects_list_page" class="page"  >
 			<!-- FORM _________________ -->
 			<dialog id="new_project_modal"> <!-- to create the Modal Container -->
-				<form> <!-- to create the Form -->
+				<form id="new_project_form"> <!-- to create the Form -->
 					<h2>New Project</h2>
 					<div class="input_list">
 						<div class="form_field_container">
 							<label><span class="material-icons-outlined">home_work</span>Name</label>
-							<input type="text" placeholder="Provide the name of the new project"> <!-- Notice: "input" is a SELFCLOSED tag -->
+							<input name="name" type="text" placeholder="Provide the name of the new project"> <!-- Notice: "input" is a SELFCLOSED tag -->
 						</div>
 						<div class="form_field_container">
 							<label><span class="material-icons-outlined">text_snippet</span>Description</label>
-							<textarea rows="4" cols="20" placeholder="Provide the description of the new project"></textarea>
+							<textarea name="description" rows="4" cols="20" placeholder="Provide the description of the new project"></textarea>
 						</div>
 						<div class="form_field_container">
 							<label><span class="material-icons-outlined">person</span>Role</label>
-							<select>
+							<select name="role">
 								<option>Architect</option>
 								<option>Engineer</option>
 								<option>Teacher</option>
@@ -55,7 +55,7 @@
 						</div>
 						<div class="form_field_container">
 							<label><span class="material-icons-outlined">verified_user</span>Status</label>
-							<select>
+							<select name="status">
 								<option>Pending</option>
 								<option>Active</option>
 								<option>Finished</option>
@@ -63,167 +63,43 @@
 						</div>
 						<div class="form_field_container">
 							<label><span class="material-icons-outlined">date_range</span>Finish Date</label>
-							<input type="date">
+							<input name="finishDate" type="date">
+						</div>
+						<div class="form_field_container">
+							<label><span class="material-icons-outlined">trending_up</span>Progress</label>
+							<input name="progress" type="range" min="0" max="100" value="40">
 						</div>
 					</div>
 					<div id="form_buttons">
-						<button id="cancel_project" class="cancel_btn">Cancel</button>
-						<button id="accept_project" class="accept_btn">Accept</button>
+						<button type="button" id="cancel_project" class="cancel_btn">Cancel</button>
+						<button type="submit" id="accept_project" class="accept_btn">Accept</button>
 					</div>
 				</form>
 			</dialog>
 			<!-- HEADER ______________________ -->
 			<header id="page_header">
 				<h2>Projects</h2>
+				<div style="display: flex; align-items: center; gap: 15px">
+							<span class="material-icons-outlined">search</span>
+							<input type="text" placeholder="Search project..." style="width: 100%; font-size: 11px; height:2.5px">
+							<span id="import_projects_btn" class="material-icons-outlined ex-im-files">file_upload</span>
+							<span id="export_projects_btn" class="material-icons-outlined ex-im-files">file_download</span>
+
+				</div>
 				<div>
-					<button>New Project</button>
+					<button id="btn_create_project" class="sub_btn">Create Project</button>
 				</div>
 			</header>
 			<!-- PROJECT LIST ________________ -->
-			<div id="project_list"> <!-- List of Cards -->
-				<div class="project_card"> <!-- The Card itself -->
-					<div class="card_header"> <!-- for header card -->
-						<p style="background-color: #c86918;padding: 10px;border-radius: 6px;aspect-ratio: 1;">HC</p> <!-- for the Initials -->
-						<div> <!-- for name and description -->
-							<h5>Hospital Center</h5>
-							<p style="font-size: 12px;">Community hospital located at downtown</p>
-						</div>
-					</div>
-					<div class="card_content"> <!-- for Content Card -->
-						<div class="card_property">
-							<p style="color: gray;"> Status</p>
-							<p>Value</p>
-						</div>
-						<div class="card_property"> 
-							<p style="color: gray;">Status</p>
-							<p>Value</p>
-						</div>
-						<div class="card_property">
-							<p style="color: gray;">Status</p>
-							<p>Value</p>
-						</div>
-						<div class="card_property">
-							<p style="color: gray;">Status</p>
-							<p>Value</p>
-						</div>
-					</div>
-				</div>
-				<div class="project_card"> <!-- The Card itself -->
-					<div class="card_header"> <!-- for header card -->
-						<p style="background-color: #c86918;padding: 10px;border-radius: 6px;aspect-ratio: 1;">HC</p> <!-- for the Initials -->
-						<div> <!-- for name and description -->
-							<h5>Project Name</h5>
-							<p>Description goes here</p>
-						</div>
-					</div>
-					<div class="card_content"> <!-- for Content Card -->
-						<div class="card_property">
-							<p style="color: gray;"> Status</p>
-							<p>Value</p>
-						</div>
-						<div class="card_property"> 
-							<p style="color: gray;">Status</p>
-							<p>Value</p>
-						</div>
-						<div class="card_property">
-							<p style="color: gray;">Status</p>
-							<p>Value</p>
-						</div>
-						<div class="card_property">
-							<p style="color: gray;">Status</p>
-							<p>Value</p>
-						</div>
-					</div>
-				</div>
-				<div class="project_card"> <!-- The Card itself -->
-					<div class="card_header"> <!-- for header card -->
-						<p style="background-color: #c86918;padding: 10px;border-radius: 6px;aspect-ratio: 1;">HC</p> <!-- for the Initials -->
-						<div> <!-- for name and description -->
-							<h5>Project Name</h5>
-							<p>Description goes here</p>
-						</div>
-					</div>
-					<div class="card_content"> <!-- for Content Card -->
-						<div class="card_property">
-							<p style="color: gray;"> Status</p>
-							<p>Value</p>
-						</div>
-						<div class="card_property"> 
-							<p style="color: gray;">Status</p>
-							<p>Value</p>
-						</div>
-						<div class="card_property">
-							<p style="color: gray;">Status</p>
-							<p>Value</p>
-						</div>
-						<div class="card_property">
-							<p style="color: gray;">Status</p>
-							<p>Value</p>
-						</div>
-					</div>
-				</div>
-				<div class="project_card"> <!-- The Card itself -->
-					<div class="card_header"> <!-- for header card -->
-						<p style="background-color: #c86918;padding: 10px;border-radius: 6px;aspect-ratio: 1;">HC</p> <!-- for the Initials -->
-						<div> <!-- for name and description -->
-							<h5>Project Name</h5>
-							<p>Description goes here</p>
-						</div>
-					</div>
-					<div class="card_content"> <!-- for Content Card -->
-						<div class="card_property">
-							<p style="color: gray;"> Status</p>
-							<p>Value</p>
-						</div>
-						<div class="card_property"> 
-							<p style="color: gray;">Status</p>
-							<p>Value</p>
-						</div>
-						<div class="card_property">
-							<p style="color: gray;">Status</p>
-							<p>Value</p>
-						</div>
-						<div class="card_property">
-							<p style="color: gray;">Status</p>
-							<p>Value</p>
-						</div>
-					</div>
-				</div>
-				<div class="project_card"> <!-- The Card itself -->
-					<div class="card_header"> <!-- for header card -->
-						<p style="background-color: #c86918;padding: 10px;border-radius: 6px;aspect-ratio: 1;">HC</p> <!-- for the Initials -->
-						<div> <!-- for name and description -->
-							<h5>Project Name</h5>
-							<p>Description goes here</p>
-						</div>
-					</div>
-					<div class="card_content"> <!-- for Content Card -->
-						<div class="card_property">
-							<p style="color: gray;"> Status</p>
-							<p>Value</p>
-						</div>
-						<div class="card_property"> 
-							<p style="color: gray;">Status</p>
-							<p>Value</p>
-						</div>
-						<div class="card_property">
-							<p style="color: gray;">Status</p>
-							<p>Value</p>
-						</div>
-						<div class="card_property">
-							<p style="color: gray;">Status</p>
-							<p>Value</p>
-						</div>
-					</div>
-				</div>
+			<div id="projects_list"> <!-- List of Cards -->
 			</div>
 		</div>
-		<div id="project_details_page" style="display: none;" class="page">
+		<div id="project_details_page" class="page hidden">
 			<!-- HEADER -->
 			<header>
 				<div style="padding: 0px 10px;">
-					<h2>Hospital Center</h2>
-					<p style="color:aquamarine">Community hospital located at downtown</p>
+					<h2 data-project-info="title">Hospital Center</h2>
+					<p data-project-info="description">Community hospital located at downtown</p>
 				</div>
 			</header>
 			<!-- Main page content _________________________________________- -->
@@ -239,32 +115,32 @@
 						</div>
 						<!-- Title and Subtitle -->
 						<div style="margin-bottom: 20px;">
-							<h4>Hospital Center</h4>
-							<p>Community hospital located at downtown</p>
+							<h4 data-title-project="title">Hospital Center</h4>
+							<p data-subtitle-project="subtitle">Community hospital located at downtown</p>
 						</div>
 						<!-- Details CONTAINER -->
 						 <div class="details_container">
 							<div>
 								<h5>Status</h5>
-								<p>Active</p>
+								<p data-field-project="status">Active</p>
 							</div>
 							<div>
 								<h5>Cost</h5>
-								<p>$2.562.252</p>
+								<p data-field-project="cost">$2.562.252</p>
 							</div>
 							<div>
 								<h5>Role</h5>
-								<p>Engineer</p>
+								<p data-field-project="role">Engineer</p>
 							</div>
 							<div>
 								<h5>Finish Date</h5>
-								<p>2026-06-16</p>
+								<p data-field-project="finish-date">2026-06-16</p>
 							</div>
 						 </div>
 						 <!-- Barra de Progreso CONTAINER -->
 						 <div class="progress_container">
-    						<div class="progress_bar">
-        						<span class="progress_text">80%</span>
+    						<div data-field-project="progress-bar" class="progress_bar">
+        						<span data-field-project="progress-text" class="progress_text">40%</span>
    							</div>
 						</div>
 					</div>
@@ -309,14 +185,14 @@
 					</div>
 				</div>
 				<!-- Viewer CONTAINER________________________ -->
-				<div id="viewer_container" class="dashboard_card">
+				<div id="viewer_container" class="dashboard_card viewer">
 
 				</div>
 
 			</div>
 
 		</div>
-		<div id="users_list_page" style="display: none;" class="page">
+		<div id="users_list_page" class="page hidden">
 			<!-- Form of New User -->
 			 <!-- FORM _________________ -->
 			<dialog id="new_user_modal"> <!-- to create the Modal Container -->
@@ -388,7 +264,7 @@
 			 <div id="users_list">
 			 </div>
 		</div>
-		<div id="user_details_page" style="display: none;" class="page">
+		<div id="user_details_page" class="page hidden">
 			<!-- HEADER -->
 			<header>
 				<div style="padding: 0px 10px;">
@@ -398,7 +274,7 @@
 			</header>
 			<!-- Main page content _________________________________________- -->
 			<div class="main_page_content" class="page">
-				<!-- Project details CONTAINER_______________ -->
+				<!-- User details CONTAINER_______________ -->
 				<div style="display: flex; flex-direction:column; row-gap:30px;">
 					<div class="dashboard_card" style="padding:20px;">
 						<!-- Circle title and Edit -->

@@ -43,6 +43,7 @@ export class Project implements IProject {
 	ui: HTMLDivElement
 	cost: number = 10
 	id: string
+	color: string
 
 	// Constructor
 	constructor(data: IProject) {
@@ -66,12 +67,22 @@ export class Project implements IProject {
 		// **PREV: this.id = uuidv4()
 		this.id = data.id || uuidv4(); // Opcional: mantiene el ID original si venía en el JSON
 		
-		this.ui = this.setUI();
 
+		// To assign a random color from the INITIAL_COLORS array to each project card
+		// Color assignment based on the project ID to ensure consistent colors for the same project across sessions:
+		let charCodeSum = 0;
+        for (let i = 0; i < this.id.length; i++) {
+            charCodeSum += this.id.charCodeAt(i);
+        }
+        const colorIndex = charCodeSum % INITIAL_COLORS.length;
+        this.color = INITIAL_COLORS[colorIndex]; // Store the assigned color in the project instance
+
+		this.ui = this.setUI();
  	}
 
 	// Creates the Project Card UI
 	setUI():HTMLDivElement {
+
 	if (this.ui) {throw new Error("UI already exists")}
 	this.ui = document.createElement("div")
 	this.ui.className = "project_card"
@@ -83,19 +94,10 @@ export class Project implements IProject {
 		? (words[0][0] + words[1][0]).toUpperCase()
 		: this.name.substring(0, 2).toUpperCase();
 
-
-	// Color assignment based on the project ID to ensure consistent colors for the same project across sessions:
-    let charCodeSum = 0;
-    for (let i = 0; i < this.id.length; i++) {
-        charCodeSum += this.id.charCodeAt(i);
-    }
-    const colorIndex = charCodeSum % INITIAL_COLORS.length;
-    const randomColor = INITIAL_COLORS[colorIndex];
-
 	this.ui.innerHTML = `
 	<div class="card_header">
-		<p data-project-info="initials" style="background-color: 
-		${randomColor}"> ${initials}
+		<p data-project-info="initials" 
+		style="background-color:${this.color}"> ${initials}
 		</p>
 		<div>
 		<h5>${this.name}</h5>

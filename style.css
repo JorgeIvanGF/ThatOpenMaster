@@ -31,6 +31,8 @@
 	--font_xl: 18px;
 	--font_2xl: 20px;
 	--font_3xl: 22px;
+	--font_4xl: 24px;
+	--font_5xl: 26px;
 }
 
 /* BODY (without #) the body of the webpage */
@@ -382,15 +384,29 @@ form .form_field_container label {
 	display: grid;
 	padding: 20px 30px;
 	gap: 10px;
-	grid-template-columns: 450px 1fr;
+	grid-template-columns: 350px 1fr;
 	height: 100%;
 }
+
+#project_details_page [data-project-info="initials"]{
+	display: flex;
+	margin: 0;
+	background-color: #c86918;
+	width: 40px;
+	height: 40px;
+	border-radius: 8px;
+	align-items: center;
+	justify-content: center;
+	font-size: var(--font_5xl);
+	font-weight: bold;	
+}
+
 
 #user_details_page > .main_page_content{
 	display: grid;
 	padding: 20px 30px;
 	gap: 10px;
-	grid-template-columns: 450px 1fr;
+	grid-template-columns: 350px 1fr;
 	height: 100%;
 }
 

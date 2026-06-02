@@ -71,6 +71,7 @@ export class ProjectsManager{
 
 	// To show the selected user details info
 		private setProjectDetailsPage(project : Project){
+
 			// get the Reference of the Master Element that contains the element targeted
 			const projectDetailsPage = document.getElementById("project_details_page");
 			if(!projectDetailsPage) {return}
@@ -91,6 +92,10 @@ export class ProjectsManager{
 			// For Header details page:
 			const title = document.querySelector('[data-project-info="title"]')
 			const description = document.querySelector('[data-project-info="description"]')
+
+			// For the color of the initials in the details page:
+			// 🚀 NUEVO: Seleccionar el contenedor de iniciales de la PÁGINA DE DETALLES
+   			const pageInitials = document.querySelector('#project_details_page [data-project-info="initials"]') as HTMLElement | null;
 
 			// For the rest of details:
 			const projectTitle = document.querySelector('[data-title-project="title"]')
@@ -115,6 +120,18 @@ export class ProjectsManager{
 			if(status) {status.textContent = project.status};
 			if(finishDate) {finishDate.textContent = project.finishDate.toLocaleDateString()};
 			
+			// For Initials and color in the details page:
+			if (pageInitials) {
+				// Calculate the initials (same as in project card):
+				const words = project.name.trim().split(/\s+/);
+				const initials = words.length > 1 
+					? (words[0][0] + words[1][0]).toUpperCase()
+					: project.name.substring(0, 2).toUpperCase();
+
+				pageInitials.textContent = initials; // Pone las letras correctas
+				pageInitials.style.backgroundColor = project.color; // 🚀 Aplica exactamente el mismo color guardado
+			}
+
 
 			// For the Progress Bar (if exist, because is optional in the HTML)
 			const percentage = project.progress !== undefined && project.progress !== null ? project.progress : 0;

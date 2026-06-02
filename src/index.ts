@@ -4,6 +4,9 @@
 import { User, IUser, roleType, statusType } from "./Class/User"
 import { UsersManager } from "./Class/UsersManager"
 
+import { Project, IProject, UserRole, ProjectStatus } from "./Class/Project"
+import { ProjectsManager } from "./Class/ProjectsManager"
+
 
 // This "document" is provided by the Browser, the main purpose is to help us to interact with the DOM
 // DOM = Bridge between the HTML structure and programming languages like JavaScript. It gives super power to webpages to interact with the user and other apps.
@@ -159,18 +162,26 @@ if(!projectsListUI) {throw new Error("projectListUI does not exists")}
 // 4. MANAGERS/ INSTANCES_____________________________________________________________________
 
 	// Define the global action to change to Details page only ONCE
-const changeToUserDetailsPage = (selectedUser: User) => {
-	navigateToPage("user_details_page"); 
-	console.log(`Cambiando a la página de detalles de: ${selectedUser.name}`);
-};
+	const changeToUserDetailsPage = (selectedUser: User) => {
+		navigateToPage("user_details_page"); 
+		console.log(`Cambiando a la página de detalles de: ${selectedUser.name}`);
+	};
 
-	// Create an Instance of UsersManager
+	const changeToProjectDetailsPage = (selectedProject: Project) => {
+		navigateToPage("project_details_page"); 
+		console.log(`Cambiando a la página de detalles de: ${selectedProject.name}`);
+	};
+	
+	// Create an Instance of UsersManager and ProjectsManager
 const usersManager = new UsersManager(usersListUI, changeToUserDetailsPage);
+const projectsManager = new ProjectsManager(projectsListUI, changeToProjectDetailsPage);
 
 
 
 // 5. EVENT LISTENERS_________________________________________________________________________
 
+
+// FOR USER FORM:::::::::::::::::::::::::::::::::::::::::::::::
 	// Check if the Form exists and is an "HTMLFormElement:"
 if (userForm && userForm instanceof HTMLFormElement){
 	
@@ -254,7 +265,94 @@ else{
 }
 
 
-// To Export JSON files
+// FOR PROJECT FORM:::::::::::::::::::::::::::::::::::::::::::::::
+	// Check if the Form exists and is an "HTMLFormElement:"
+if (projectForm && projectForm instanceof HTMLFormElement){
+	
+	// Forms have an Event called "SUBMIT" when the project clicks one of the designated buttons
+	//	also it passes data through the fn, to catch it is used the arg "e"
+	projectForm.addEventListener("submit", (e) => {
+		// To prevent the Default behavior which is to reload the page:
+		e.preventDefault()
+		
+		// To create a new Instance of the Class FormData based on the element form previuosly found
+		const formData = new FormData(projectForm)
+		
+		// NOTES: * To get any value of the Formdata element (it has to be named in the INPUT/SELECT container of the HTML file):
+		//        * The fn .get() returns generally "string" type, no matter if you define the type in the HTML file
+		
+				
+		// Definition of an Object based on the info from formData:
+		//		NOTE: Using the word "as" is ONLY recommended when is 100% confirmed the dataype of the "conversion"
+		//		
+		//		**** to Use the LocalTimeZone of the USER ***
+		const dateRaw = formData.get("finishDate") as string; // it comes "2026-03-30"
+				// Check if is Null and To change the format To "2026/03/30"		
+		const finishDateObj = dateRaw ? new Date(dateRaw.replace(/-/g, '\/')) : new Date();
+
+
+		const projectObj: IProject = {
+
+			name: formData.get("name") as string,
+			description: formData.get("description") as string,
+			userRole: formData.get("role") as UserRole,
+			status: formData.get("status") as ProjectStatus,
+			finishDate: new Date(finishDateObj), // Casted to Date type
+			progress: Number(formData.get("progress")) // Casted to Number type
+		}
+		
+		// To intercept the ERRORS:
+		try{
+			// Create a new User using the "usersManager" with the info of the userObject got from the Form
+			// As usersManager already has the given FN to chg the pages, we can call it clean here
+			const project = projectsManager.newProject(projectObj)
+			
+			// To Clean up the Form after submitted
+			projectForm.reset();
+			
+			// To close the Modal (Form)
+			toggleForm("new_project_modal","close")
+			
+			// to print out in Console
+			console.log(project)
+			
+		}catch(error){
+			// window.alert(error)
+
+			if (error instanceof Error) {
+				showError(error.message)
+			} else {
+				showError("Unknown error occurred")
+			}
+		}
+
+		// To Listen the Btn to close the Error Dialog in the browser
+		if(closeErrorModal && errorModal instanceof HTMLDialogElement){
+			closeErrorModal.addEventListener("click", () => {
+				errorModal.close()
+			})
+		}		
+	})
+
+	if(cancelProjectBtn){
+		cancelProjectBtn.addEventListener("click", () => {
+			projectForm.reset();
+			toggleForm("new_project_modal", "close");
+			console.log("Form closed by the user. Data discarted")
+		})
+	}
+	else{
+		console.warn("Button Cancel was not found in the structure");
+	}
+
+}
+else{
+	console.warn("Form Id was not found. Check the ID form!")
+}
+
+
+
+// To Export JSON files USER:::
 const exportUsersBtn = document.getElementById("export_users_btn");
 if(!exportUsersBtn) {throw new Error("Export button does not exists")}
 else{
@@ -263,12 +361,30 @@ else{
 		})
 	}
 
-// To import JSON files
+// To Export JSON files PROJECT:::
+const exportProjectsBtn = document.getElementById("export_projects_btn");
+if(!exportProjectsBtn) {throw new Error("Export button does not exists")}
+else{
+		exportProjectsBtn.addEventListener("click", () =>{
+			projectsManager.exportToJSON()
+		})
+	}
+
+// To import JSON files USER:::
 const importUsersBtn = document.getElementById("import_users_btn");
 if(!importUsersBtn) {throw new Error("Import button does not exist")}
 else{
 		importUsersBtn.addEventListener("click", () =>{
 			usersManager.importFromJSON();
+		})
+	}
+
+// To import JSON files PROJECT:::
+const importProjectsBtn = document.getElementById("import_projects_btn");
+if(!importProjectsBtn) {throw new Error("Import button does not exist")}
+else{
+		importProjectsBtn.addEventListener("click", () =>{
+			projectsManager.importFromJSON();
 		})
 	}
 

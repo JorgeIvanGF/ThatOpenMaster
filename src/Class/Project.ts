@@ -14,6 +14,7 @@ export interface IProject {
 	status: ProjectStatus
 	userRole: UserRole
 	finishDate: Date
+	progress?: number // Optional, because it will be added later in the process
 }
 
 
@@ -25,11 +26,11 @@ export class Project implements IProject {
 	status: "Pending" | "Active" | "Finished"
 	userRole: "Architect" | "Engineer" | "Developer"
 	finishDate: Date
+	progress?: number // Optional, because it will be added later in the process
 	
 	//Class internals
 	ui: HTMLDivElement
 	cost: number = 10
-	progress: number = 0
 	id: string
 
 	// Constructor
@@ -38,40 +39,53 @@ export class Project implements IProject {
     this.description = data.description
     this.status = data.status
     this.userRole = data.userRole
-    this.finishDate = data.finishDate
-	this.id = uuidv4()
-	this.ui = this.setUI()
+    this.progress = data.progress
+	
+	// **PREV: this.finishDate = data.finishDate instanceof Date ? data.finishDate : new Date(data.finishDate);
+    
+	// Double check for dates come from JSON as strings, so we need to convert them to Date objects
+	if (data.finishDate) {
+    const parsedDate = new Date(data.finishDate);
+    this.finishDate = isNaN(parsedDate.getTime()) ? new Date() : parsedDate;
+	}
+	else {this.finishDate = new Date()} // Default to current date if not provided
+
+	// **PREV: this.id = uuidv4()
+	this.id = data.id || uuidv4(); // Opcional: mantiene el ID original si venía en el JSON
+	
+	this.ui = this.setUI();
+
  	}
 
-	//creates the project card UI
+	// Creates the Project Card UI
 	setUI():HTMLDivElement {
 	if (this.ui) {throw new Error("UI already exists")}
 	this.ui = document.createElement("div")
 	this.ui.className = "project_card"
 	this.ui.innerHTML = `
 	<div class="card_header">
-		<p style="background-color: #ca8134; padding: 10px; border-radius: 8px; aspect-ratio: 1;">HC</p>
+		<p data-project-info="initials">HC</p>
 		<div>
 		<h5>${this.name}</h5>
-		<p>${this.description}</p>
+		<p data-project-info="description-cards">${this.description}</p>
 		</div>
 	</div>
-	<div class="card-content">
-		<div class="card-property">
-		<p style="color: #969696;">Status</p>
+	<div class="card_content">
+		<div class="card_property">
+		<p style="color: #b7b7b7;">Status</p>
 		<p>${this.status}</p>
 		</div>
-		<div class="card-property">
-		<p style="color: #969696;">Role</p>
+		<div class="card_property">
+		<p style="color: #b7b7b7;">Role</p>
 		<p>${this.userRole}</p>
 		</div>
-		<div class="card-property">
-		<p style="color: #969696;">Cost</p>
+		<div class="card_property">
+		<p style="color: #b7b7b7;">Cost</p>
 		<p>$${this.cost}</p>
 		</div>
-		<div class="card-property">
-		<p style="color: #969696;">Estimated Progress</p>
-		<p>${this.progress * 100}%</p>
+		<div class="card_property">
+		<p style="color: #b7b7b7;">Progress</p>
+		<p>${this.progress}%</p>
 		</div>
 	</div>`
 	return this.ui;

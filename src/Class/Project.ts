@@ -18,6 +18,16 @@ export interface IProject {
 	progress?: number // Optional, because it will be added later in the process
 }
 
+// Array defining a set of initial colors for project cards, which can be used to style the UI elements dynamically.
+const INITIAL_COLORS = [
+    "#30e7a1", // Verde brillante (el que ya tenías)
+    "#ff6b6b", // Coral / Rojo suave
+    "#4ea8de", // Azul cielo
+    "#ffb703", // Amarillo / Naranja cálido
+    "#9d4edd", // Morado pastel
+    "#ff85a1"  // Rosado
+];
+
 
 // The Class itself
 export class Project implements IProject {
@@ -36,25 +46,27 @@ export class Project implements IProject {
 
 	// Constructor
 	constructor(data: IProject) {
-	this.name = data.name
-    this.description = data.description
-    this.status = data.status
-    this.userRole = data.userRole
-    this.progress = data.progress
-	
-	// **PREV: this.finishDate = data.finishDate instanceof Date ? data.finishDate : new Date(data.finishDate);
-    
-	// Double check for dates come from JSON as strings, so we need to convert them to Date objects
-	if (data.finishDate) {
-    const parsedDate = new Date(data.finishDate);
-    this.finishDate = isNaN(parsedDate.getTime()) ? new Date() : parsedDate;
-	}
-	else {this.finishDate = new Date()} // Default to current date if not provided
 
-	// **PREV: this.id = uuidv4()
-	this.id = data.id || uuidv4(); // Opcional: mantiene el ID original si venía en el JSON
-	
-	this.ui = this.setUI();
+		// if the name is empty or only spaces or less than 5 characters, assign "Untitled Project" as default name, otherwise use the provided name
+		this.name = data.name && data.name.trim().length >= 5 ? data.name : "Untitled Project";
+		this.description = data.description
+		this.status = data.status
+		this.userRole = data.userRole
+		this.progress = data.progress
+		
+		// **PREV: this.finishDate = data.finishDate instanceof Date ? data.finishDate : new Date(data.finishDate);
+		
+		// Double check for dates come from JSON as strings, so we need to convert them to Date objects
+		if (data.finishDate) {
+		const parsedDate = new Date(data.finishDate);
+		this.finishDate = isNaN(parsedDate.getTime()) ? new Date() : parsedDate;
+		}
+		else {this.finishDate = new Date()} // Default to current date if not provided
+
+		// **PREV: this.id = uuidv4()
+		this.id = data.id || uuidv4(); // Opcional: mantiene el ID original si venía en el JSON
+		
+		this.ui = this.setUI();
 
  	}
 
@@ -65,17 +77,26 @@ export class Project implements IProject {
 	this.ui.className = "project_card"
 
 
-// 🚀 CÁLCULO DINÁMICO DE INICIALES:
-	// Si tiene más de una palabra ("Planta Solar"), toma las dos primeras letras: "PS"
-	// Si es una sola palabra ("Casa"), toma sus dos primeras letras en mayúscula: "CA"
+	// Calculate the initials for the project card:
 	const words = this.name.trim().split(/\s+/);
 	const initials = words.length > 1 
 		? (words[0][0] + words[1][0]).toUpperCase()
 		: this.name.substring(0, 2).toUpperCase();
 
+
+	// Color assignment based on the project ID to ensure consistent colors for the same project across sessions:
+    let charCodeSum = 0;
+    for (let i = 0; i < this.id.length; i++) {
+        charCodeSum += this.id.charCodeAt(i);
+    }
+    const colorIndex = charCodeSum % INITIAL_COLORS.length;
+    const randomColor = INITIAL_COLORS[colorIndex];
+
 	this.ui.innerHTML = `
 	<div class="card_header">
-		<p data-project-info="initials">${initials}</p>
+		<p data-project-info="initials" style="background-color: 
+		${randomColor}"> ${initials}
+		</p>
 		<div>
 		<h5>${this.name}</h5>
 		<p data-project-info="description-cards">${this.description}</p>

@@ -35,6 +35,12 @@ export class ProjectsManager{
 
 		// New Project
 	newProject(data : IProject) : Project {
+
+		// To validate that the name is not empty or has at least 5 characters, otherwise assign "Untitled Project" as default name
+		if (!data.name || data.name.trim().length < 5) {
+        	throw new Error("Project name must be at least 5 characters long.");
+    	}
+
 		// To create a list with the names of the projects using "map"
 		const projectsNames = this.list.map((projectIterated)=>{
 			return projectIterated.name

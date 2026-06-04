@@ -11,7 +11,7 @@ export class ProjectsManager{
 	private onProjectClickCallback?: (project: Project) => void; // To save the action in a centralized way
 	currentProject: Project | null = null; // To keep track of the currently selected project (if any)
 
-	
+
 	//	METHODS...................................
 	
 		// Constructor:
@@ -72,139 +72,158 @@ export class ProjectsManager{
 		return project;
 	};
 
-	// To show the selected user details info
-		private setProjectDetailsPage(project : Project){
+		// To show the selected user details info
+	private setProjectDetailsPage(project : Project){
 
-			// get the Reference of the Master Element that contains the element targeted
-			const projectDetailsPage = document.getElementById("project_details_page");
-			if(!projectDetailsPage) {return}
-	
-			// Select the custom attribute created in the HTML
-			const name = projectDetailsPage.querySelector("[data-project-info='name']")
-			if(name) {name.textContent = project.name }
-	
-			// Change the Info
-			this.changeProjectDetails(project)
+		// get the Reference of the Master Element that contains the element targeted
+		const projectDetailsPage = document.getElementById("project_details_page");
+		if(!projectDetailsPage) {return}
+
+		// Select the custom attribute created in the HTML
+		const name = projectDetailsPage.querySelector("[data-project-info='name']")
+		if(name) {name.textContent = project.name }
+
+		// Change the Info
+		this.changeProjectDetails(project)
+	}
+
+
+		// Update the project details page with the info of the modified project
+	updateProject(project: Project, data: IProject): void {
+
+		project.name = data.name;
+		project.description = data.description;
+		project.userRole = data.userRole;
+		project.status = data.status;
+		project.finishDate = data.finishDate;
+		project.progress = data.progress;
+
+		// Update UI card Info
+		project.refreshUI();
+
+		// Refresh details page if this is the selected project
+		if(this.currentProject === project){
+			this.setProjectDetailsPage(project);
 		}
+	}
 
-	// Helper
-		private changeProjectDetails(project : Project){
-			
-			// To select the custom attributes created in the HTML
+		// Helper
+	private changeProjectDetails(project : Project){		
+		// To select the custom attributes created in the HTML
 
-			// For Header details page:
-			const title = document.querySelector('[data-project-info="title"]')
-			const description = document.querySelector('[data-project-info="description"]')
+		// For Header details page:
+		const title = document.querySelector('[data-project-info="title"]')
+		const description = document.querySelector('[data-project-info="description"]')
 
-			// For the color of the initials in the details page:
-			// 🚀 NUEVO: Seleccionar el contenedor de iniciales de la PÁGINA DE DETALLES
-   			const pageInitials = document.querySelector('#project_details_page [data-project-info="initials"]') as HTMLElement | null;
+		// For the color of the initials in the details page:
+		// 🚀 NUEVO: Seleccionar el contenedor de iniciales de la PÁGINA DE DETALLES
+		const pageInitials = document.querySelector('#project_details_page [data-project-info="initials"]') as HTMLElement | null;
 
-			// For the rest of details:
-			const projectTitle = document.querySelector('[data-title-project="title"]')
-			const projectSubtitle = document.querySelector('[data-subtitle-project="subtitle"]')
-			const cost = document.querySelector('[data-field-project="cost"]')
-			const role = document.querySelector('[data-field-project="role"]')
-			const status = document.querySelector('[data-field-project="status"]')
-			const finishDate = document.querySelector('[data-field-project="finish-date"]')
+		// For the rest of details:
+		const projectTitle = document.querySelector('[data-title-project="title"]')
+		const projectSubtitle = document.querySelector('[data-subtitle-project="subtitle"]')
+		const cost = document.querySelector('[data-field-project="cost"]')
+		const role = document.querySelector('[data-field-project="role"]')
+		const status = document.querySelector('[data-field-project="status"]')
+		const finishDate = document.querySelector('[data-field-project="finish-date"]')
 
-			// For the Progress Bar
-			const progressBar = document.querySelector('[data-field-project="progress-bar"]') as HTMLElement | null
-			const progressText = document.querySelector('[data-field-project="progress-text"]')
-			
-			// Changes
-			if(title){title.textContent = project.name}
-			if(description){description.textContent = project.description}
-			
-			if(projectTitle){projectTitle.textContent = project.name}
-			if(projectSubtitle){projectSubtitle.textContent = project.description}
-			if(cost) {cost.textContent = `$${project.cost}`};
-			if(role) {role.textContent = project.userRole};
-			if(status) {status.textContent = project.status};
-			if(finishDate) {finishDate.textContent = project.finishDate.toLocaleDateString()};
-			
-			// For Initials and color in the details page:
-			if (pageInitials) {
-				// Calculate the initials (same as in project card):
-				const words = project.name.trim().split(/\s+/);
-				const initials = words.length > 1 
-					? (words[0][0] + words[1][0]).toUpperCase()
-					: project.name.substring(0, 2).toUpperCase();
+		// For the Progress Bar
+		const progressBar = document.querySelector('[data-field-project="progress-bar"]') as HTMLElement | null
+		const progressText = document.querySelector('[data-field-project="progress-text"]')
+		
+		// Changes
+		if(title){title.textContent = project.name}
+		if(description){description.textContent = project.description}
+		
+		if(projectTitle){projectTitle.textContent = project.name}
+		if(projectSubtitle){projectSubtitle.textContent = project.description}
+		if(cost) {cost.textContent = `$${project.cost}`};
+		if(role) {role.textContent = project.userRole};
+		if(status) {status.textContent = project.status};
+		if(finishDate) {finishDate.textContent = project.finishDate.toLocaleDateString()};
+		
+		// For Initials and color in the details page:
+		if (pageInitials) {
+			// Calculate the initials (same as in project card):
+			const words = project.name.trim().split(/\s+/);
+			const initials = words.length > 1 
+				? (words[0][0] + words[1][0]).toUpperCase()
+				: project.name.substring(0, 2).toUpperCase();
 
-				pageInitials.textContent = initials; // Pone las letras correctas
-				pageInitials.style.backgroundColor = project.color; // 🚀 Aplica exactamente el mismo color guardado
-			}
-
-
-			// For the Progress Bar (if exist, because is optional in the HTML)
-			const percentage = project.progress !== undefined && project.progress !== null ? project.progress : 0;
-			const percentageString = `${percentage}%`;
-			// Change the style of the progress bar and the text that shows the percentage
-			if (progressBar) {progressBar.style.width = percentageString};
-			if (progressText) {progressText.textContent = percentageString};
-
-		}
-
-
-			// To Export as JSON file
-		exportToJSON(fileName:string = "projects"){  // Note: the "=" in the arg refers as a Default value if None is provided.
-			// To convert into JSON format
-			const json = JSON.stringify(this.list, null, 2)
-			
-			// To be able to download the JSON file created is needed to use a BLOB (container of binary data)
-			const blob = new Blob([json], {type:'application/json'})
-
-			// To create the temporary URL to download the file
-			const url = 	URL.createObjectURL(blob);
-
-			// To create a temporary "GHOST" HTML element when click => download the file
-			const a = document.createElement('a');
-
-			// To set the url previously created
-			a.href = url;
-
-			// To set the name of the file to be downloaded (comes from the arg)
-			a.download = fileName;
-
-			// To SIMULATE the click on the btn to start the download
-			a.click();
-
-			// To Clean Up the URL (previously created) afer used (when "click" and download)
-			URL.revokeObjectURL(url);
-
+			pageInitials.textContent = initials; // Pone las letras correctas
+			pageInitials.style.backgroundColor = project.color; // 🚀 Aplica exactamente el mismo color guardado
 		}
 
 
-		importFromJSON(){
-			const input = document.createElement("input");
-			input.type='file';
-			input.accept='application/json';
-			const reader = new FileReader();
-	
-	
-			// Register the Event when reader finishes the reading of the file
-			reader.addEventListener('load', () =>{
-				const json = reader.result;
-				if(!json) {return}
-				const projects:IProject[] = JSON.parse(json as string)
-				for (const project of projects){ // Note: it uses "OF" bc is iterating through an ARRAY
-					try{
-						this.newProject(project);
-					} catch(error){
-	
-					}
-				}
-			})
-	
-			// Register when the user have selected a file to upload.
-			input.addEventListener('change', () =>{
-				const filesList = input.files
-				if(!filesList){return}
-				reader.readAsText(filesList[0])
-			})
-	
-			// When the real "action" begins
-			input.click();		 
-		}
+		// For the Progress Bar (if exist, because is optional in the HTML)
+		const percentage = project.progress !== undefined && project.progress !== null ? project.progress : 0;
+		const percentageString = `${percentage}%`;
+		// Change the style of the progress bar and the text that shows the percentage
+		if (progressBar) {progressBar.style.width = percentageString};
+		if (progressText) {progressText.textContent = percentageString};
 
 	}
+
+
+		// To Export as JSON file
+	exportToJSON(fileName:string = "projects"){  // Note: the "=" in the arg refers as a Default value if None is provided.
+		// To convert into JSON format
+		const json = JSON.stringify(this.list, null, 2)
+		
+		// To be able to download the JSON file created is needed to use a BLOB (container of binary data)
+		const blob = new Blob([json], {type:'application/json'})
+
+		// To create the temporary URL to download the file
+		const url = 	URL.createObjectURL(blob);
+
+		// To create a temporary "GHOST" HTML element when click => download the file
+		const a = document.createElement('a');
+
+		// To set the url previously created
+		a.href = url;
+
+		// To set the name of the file to be downloaded (comes from the arg)
+		a.download = fileName;
+
+		// To SIMULATE the click on the btn to start the download
+		a.click();
+
+		// To Clean Up the URL (previously created) afer used (when "click" and download)
+		URL.revokeObjectURL(url);
+
+	}
+
+		// To Import from JSON file
+	importFromJSON(){
+		const input = document.createElement("input");
+		input.type='file';
+		input.accept='application/json';
+		const reader = new FileReader();
+
+
+		// Register the Event when reader finishes the reading of the file
+		reader.addEventListener('load', () =>{
+			const json = reader.result;
+			if(!json) {return}
+			const projects:IProject[] = JSON.parse(json as string)
+			for (const project of projects){ // Note: it uses "OF" bc is iterating through an ARRAY
+				try{
+					this.newProject(project);
+				} catch(error){
+
+				}
+			}
+		})
+
+		// Register when the user have selected a file to upload.
+		input.addEventListener('change', () =>{
+			const filesList = input.files
+			if(!filesList){return}
+			reader.readAsText(filesList[0])
+		})
+
+		// When the real "action" begins
+		input.click();		 
+	}
+
+}

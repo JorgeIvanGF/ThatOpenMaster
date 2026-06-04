@@ -77,17 +77,17 @@ const projectForm = document.getElementById("new_project_form")
 
 // BUTTONS :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-	// SIDEBAR----------------------------------------------------------
+	// SIDEBAR__________________________________________________________
 const btnUsers = document.getElementById("usersBtn");
 const btnProjects = document.getElementById("projectsBtn");
 
 
-	// NEW USER / PROJECT BUTTONS---------------------------------------
+	// NEW USER / PROJECT BUTTONS________________________________________
 const btnCreateUser = document.getElementById("btn_create_user")
 const btnCreateProject = document.getElementById("btn_create_project")
 
 
-	// ERRORS-------------------------------------------------------------
+	// ERRORS___________________________________________________________________-
 		// Get the Button Close Error Modal
 const closeErrorModal = document.getElementById("close_error_modal")
 		// Get the Elements for Errors:
@@ -95,13 +95,13 @@ const errorModal = document.getElementById("error_modal") // The Modal
 const errorMessage = document.getElementById("error_message") // The Message
 
 
-	// CANCEL BUTTONS IN FORMS-----------------------------------------------
+	// CANCEL BUTTONS IN FORMS_____________________________________________________
 		// Get the Cancel button
 const cancelUserBtn = document.getElementById("cancel_user")
 const cancelProjectBtn = document.getElementById("cancel_project")
 
 
-	// EDIT PRJ DETAILS BTN------------------------------------------------------
+	// EDIT PRJ DETAILS BTN_____________________________________________________
 const editProjectBtn = document.getElementById("btn_prj_details")
 
 
@@ -135,13 +135,18 @@ if(!projectsListUI) {throw new Error("projectListUI does not exists")}
 const usersManager = new UsersManager(usersListUI, changeToUserDetailsPage);
 const projectsManager = new ProjectsManager(projectsListUI, changeToProjectDetailsPage);
 
+	// To know if is Edit or New Project in the Modal Form
+let projectFormMode: "create" | "edit" = "create";
+
+	// To storage the current project selected to edit
+let editingProject: Project | null = null;
 
 
 // ____________________________________5. EVENT LISTENERS______________________________________________
 
 	// NEW USER / PROJECT TRIGGER BUTTONS:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-		// For NEWUSER Button
+		// For NEWUSER Button________________________________________________________________________
 if(btnCreateUser){
 	//	It "listens" the Event when Cliks the btn:
 	//	Notice: the function passed is called automatiacally, 
@@ -150,10 +155,17 @@ if(btnCreateUser){
 }
 else {console.warn("Button Create User is null")}
 
-		// For NEWPROJECT Button
-if(btnCreateProject){btnCreateProject.addEventListener("click", () => {toggleForm("new_project_modal","open")})}
-else{console.warn("Button Create Project is null")}
 
+
+		// For NEWPROJECT Button ___________________________________________________________________
+if(btnCreateProject){btnCreateProject.addEventListener("click", () => {
+
+	// To provide the vars if is Edit or Create a new Project, to use the same form for both actions
+	projectFormMode = "create";
+	editingProject = null;
+	toggleForm("new_project_modal","open")
+})}
+else{console.warn("Button Create Project is null")}
 
 
 
@@ -235,6 +247,7 @@ if (userForm && userForm instanceof HTMLFormElement){
 else{console.warn("Form Id was not found. Check the ID form!")};
 
 
+
 	// FOR PROJECT FORM:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 		// Check if the Form exists and is an "HTMLFormElement:"
 if (projectForm && projectForm instanceof HTMLFormElement){
@@ -273,18 +286,48 @@ if (projectForm && projectForm instanceof HTMLFormElement){
 		
 		// To intercept the ERRORS:
 		try{
-			// Create a new User using the "usersManager" with the info of the userObject got from the Form
-			// As usersManager already has the given FN to chg the pages, we can call it clean here
-			const project = projectsManager.newProject(projectObj)
-			
-			// To Clean up the Form after submitted
-			projectForm.reset();
-			
-			// To close the Modal (Form)
-			toggleForm("new_project_modal","close")
-			
-			// to print out in Console
-			console.log(project)
+
+
+				console.log("Mode:", projectFormMode);
+				console.log("Project being edited:", editingProject);
+
+				// Create a new User using the "usersManager" with the info of the userObject got from the Form
+				// As usersManager already has the given FN to chg the pages, we can call it clean here
+				//const project = projectsManager.newProject(projectObj)
+
+				if(projectFormMode === "create"){
+
+					console.log("Creating project...");
+
+					const project = projectsManager.newProject(projectObj);
+
+					console.log(project);
+				}
+				else if(editingProject){
+
+					console.log("Editing project...");
+					console.log("Project before edit:", editingProject); 
+	/* 				console.log("El Projecto Que llega al ser EDITADO") // DEBUG
+					console.log(projectObj); // DEBUG */
+
+					projectsManager.updateProject(
+						editingProject,
+						projectObj
+					);
+					console.log("Project After edit:", editingProject); 
+				}
+
+				projectFormMode = "create";
+				editingProject = null;
+				
+				// To Clean up the Form after submitted
+				projectForm.reset();
+				
+				// To close the Modal (Form)
+				toggleForm("new_project_modal","close")
+				
+				// to print out in Console
+				//console.log(project)
 			
 		}catch(error){
 			// window.alert(error)
@@ -322,19 +365,47 @@ else{console.warn("Form Id was not found. Check the ID form!")};
 if(editProjectBtn){
 	editProjectBtn.addEventListener("click", () => {
 
+		console.log("Edit Project Button Clicked");
+		// To change the mode of the Form to Edit
+		projectFormMode = "edit";
+		
 		// To get the current selected project from the PM and check if exists
 		const project = projectsManager.currentProject;
         if(!project){
             console.warn("No project selected");
             return;
         }
-		const modal = document.getElementById("new_project_modal");
+		// To storage the current project in a var to use it in the form
+		editingProject = project;
 
-		console.log(modal);
-		console.log(modal?.constructor.name);
+		// To fill the form with the current project info:
+		if(projectForm instanceof HTMLFormElement){
+
+			(projectForm.elements.namedItem("name") as HTMLInputElement).value = project.name;
+
+			(projectForm.elements.namedItem("description") as HTMLTextAreaElement).value = project.description;
+
+			(projectForm.elements.namedItem("role") as HTMLSelectElement).value = project.userRole;
+
+			(projectForm.elements.namedItem("status") as HTMLSelectElement).value =	project.status;
+
+			(projectForm.elements.namedItem("progress") as HTMLInputElement).value = String(project.progress ?? 0);
+		}
+
+/* 		projectsManager.updateProject(project, {
+			name: "Proyecto Editado",
+			description: "Descripción Editada",
+			status: "Finished",
+			userRole: "Developer",
+			finishDate: new Date(),
+			progress: 100
+		}); */
+
+		console.log(project);
+
+		const modal = document.getElementById("new_project_modal");
         toggleForm("new_project_modal", "open");
-		console.log("Edit Project Details Button Clicked")
-		console.log(projectsManager.currentProject);
+
 	})
 }
 else{console.warn("Button Edit Project Details was not found in the structure")};

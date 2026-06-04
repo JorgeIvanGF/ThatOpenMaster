@@ -124,4 +124,36 @@ export class Project implements IProject {
 	</div>`
 	return this.ui;
 	}
+
+
+	// To update the project with new data and refresh the UI accordingly
+	refreshUI(): void {
+
+		const title = this.ui.querySelector("h5");
+		const description = this.ui.querySelector('[data-project-info="description-cards"]');
+		const properties = this.ui.querySelectorAll(".card_property p:last-child");
+		const initialsElement = this.ui.querySelector('[data-project-info="initials"]');
+
+
+		if(title){title.textContent = this.name}
+		if(description){description.textContent = this.description}
+
+		if(properties[0]){properties[0].textContent = this.status}
+
+		if(properties[1]){properties[1].textContent = this.userRole}
+
+		if(properties[3]){properties[3].textContent = `${this.progress}%`}
+
+		if(initialsElement){
+
+			const words = this.name.trim().split(/\s+/);
+
+			const initials = words.length > 1
+				? (words[0][0] + words[1][0]).toUpperCase()
+				: this.name.substring(0, 2).toUpperCase();
+
+			initialsElement.textContent = initials;
+		}
+	}
+
 }

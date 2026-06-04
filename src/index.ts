@@ -1,6 +1,6 @@
 
 
-// 1. IMPORTS_____________________________________________________________________________________
+// _____________________________1. IMPORTS_____________________________________________________________________________________
 import { User, IUser, roleType, statusType } from "./Class/User"
 import { UsersManager } from "./Class/UsersManager"
 
@@ -12,38 +12,9 @@ import { ProjectsManager } from "./Class/ProjectsManager"
 // DOM = Bridge between the HTML structure and programming languages like JavaScript. It gives super power to webpages to interact with the user and other apps.
 
 
-// DEFINE a function to be used when the btn "new user" is Clicked.................................................
-
-//		Note:In Typescript is needed to define the exact datatype for the args and its Returns. ex:  "id: string"
-
-/* // Function to Show the Form:
-function showForm (id:string):void {
-	// Get the element by the ID passed
-	const modal = document.getElementById(id)
-	// the showModal() method belongs particulary to the sub-element "HTMLDialogElement", so is needed to check it in the IF statement
-	if (modal && modal instanceof HTMLDialogElement){
-		modal.showModal()
-	}
-	else{
-		console.warn("ID passed was not found. ID: ", id)
-	}
-}
-
-// Function to Close the Form:
-function closeForm (id:string):void {
-	// Get the element by the ID passed
-	const modal = document.getElementById(id)
-	// the showModal() method belongs particulary to the sub-element "HTMLDialogElement", so is needed to check it in the IF statement
-	if (modal && modal instanceof HTMLDialogElement){
-		modal.close()
-	}
-	else{
-		console.warn("ID passed was not found. ID: ", id)
-	}
-} */
 
 
-// 2. UTILITY FUNCTIONS___________________________________________________________________________________
+// _____________________________2. UTILITY FUNCTIONS__________________________________________________
 
 // Function Toggle to OPEN or CLOSE the Modal (Form)...............................
 function toggleForm(id: string, action: "open" | "close"): void {
@@ -94,7 +65,7 @@ function navigateToPage(targetPageId: string): void {
 
 
 
-// 3. DOM REFERENCES________________________________________________________________________________
+// _______________________________3. DOM REFERENCES__________________________________________
 
 // FORMS:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -107,43 +78,31 @@ const projectForm = document.getElementById("new_project_form")
 // BUTTONS :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 	// SIDEBAR----------------------------------------------------------
-	// Get the btns of Projects and Users:
 const btnUsers = document.getElementById("usersBtn");
 const btnProjects = document.getElementById("projectsBtn");
 
 
 	// NEW USER / PROJECT BUTTONS---------------------------------------
-	// To get the buttons to create a new User/Project:
 const btnCreateUser = document.getElementById("btn_create_user")
 const btnCreateProject = document.getElementById("btn_create_project")
 
-		// For USER
-if(btnCreateUser){
-	//	It "listens" the Event when Cliks the btn:
-	//	Notice: the function passed is called automatiacally, 
-	//		    therefore, it needs to create an ANONIMOUS FUNCTION to call the function previously created and be called after the Event
-	btnCreateUser.addEventListener("click", () => {toggleForm("new_user_modal","open")}) 
-}
-else {console.warn("Button Create User is null")}
-	// Get the Cancel button
-const cancelUserBtn = document.getElementById("cancel_user")
 
-
-		// For PROJECT
-if(btnCreateProject){btnCreateProject.addEventListener("click", () => {toggleForm("new_project_modal","open")})}
-else{console.warn("Button Create Project is null")}
-const cancelProjectBtn = document.getElementById("cancel_project")
-
-
-// ERRORS-------------------------------------------------------------
-
-	// Get the Button Close Error Modal
+	// ERRORS-------------------------------------------------------------
+		// Get the Button Close Error Modal
 const closeErrorModal = document.getElementById("close_error_modal")
-
-	// Get the Elements for Errors:
+		// Get the Elements for Errors:
 const errorModal = document.getElementById("error_modal") // The Modal
 const errorMessage = document.getElementById("error_message") // The Message
 
+
+	// CANCEL BUTTONS IN FORMS-----------------------------------------------
+		// Get the Cancel button
+const cancelUserBtn = document.getElementById("cancel_user")
+const cancelProjectBtn = document.getElementById("cancel_project")
+
+
+	// EDIT PRJ DETAILS BTN------------------------------------------------------
+const editProjectBtn = document.getElementById("btn_prj_details")
 
 
 // CONTAINERS:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -159,7 +118,7 @@ if(!projectsListUI) {throw new Error("projectListUI does not exists")}
 
 
 
-// 4. MANAGERS/ INSTANCES_____________________________________________________________________
+// ____________________________________4. MANAGERS/ INSTANCES______________________________________________
 
 	// Define the global action to change to Details page only ONCE
 	const changeToUserDetailsPage = (selectedUser: User) => {
@@ -178,15 +137,32 @@ const projectsManager = new ProjectsManager(projectsListUI, changeToProjectDetai
 
 
 
-// 5. EVENT LISTENERS_________________________________________________________________________
+// ____________________________________5. EVENT LISTENERS______________________________________________
+
+	// NEW USER / PROJECT TRIGGER BUTTONS:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+		// For NEWUSER Button
+if(btnCreateUser){
+	//	It "listens" the Event when Cliks the btn:
+	//	Notice: the function passed is called automatiacally, 
+	//		    therefore, it needs to create an ANONIMOUS FUNCTION to call the function previously created and be called after the Event
+	btnCreateUser.addEventListener("click", () => {toggleForm("new_user_modal","open")}) 
+}
+else {console.warn("Button Create User is null")}
+
+		// For NEWPROJECT Button
+if(btnCreateProject){btnCreateProject.addEventListener("click", () => {toggleForm("new_project_modal","open")})}
+else{console.warn("Button Create Project is null")}
 
 
-// FOR USER FORM:::::::::::::::::::::::::::::::::::::::::::::::
-	// Check if the Form exists and is an "HTMLFormElement:"
+
+
+	// FOR USER FORM:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+		// Check if the Form exists and is an "HTMLFormElement:"
 if (userForm && userForm instanceof HTMLFormElement){
 	
-	// Forms have an Event called "SUBMIT" when the user clicks one of the designated buttons
-	//	also it passes data through the fn, to catch it is used the arg "e"
+		// Forms have an Event called "SUBMIT" when the user clicks one of the designated buttons
+		//	also it passes data through the fn, to catch it is used the arg "e"
 	userForm.addEventListener("submit", (e) => {
 		// To prevent the Default behavior which is to reload the page:
 		e.preventDefault()
@@ -254,23 +230,17 @@ if (userForm && userForm instanceof HTMLFormElement){
 			console.log("Form closed by the user. Data discarted")
 		})
 	}
-	else{
-		console.warn("Button Cancel was not found in the structure");
-	}
-
-
+	else{console.warn("Button Cancel was not found in the structure")};
 }
-else{
-	console.warn("Form Id was not found. Check the ID form!")
-}
+else{console.warn("Form Id was not found. Check the ID form!")};
 
 
-// FOR PROJECT FORM:::::::::::::::::::::::::::::::::::::::::::::::
-	// Check if the Form exists and is an "HTMLFormElement:"
+	// FOR PROJECT FORM:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+		// Check if the Form exists and is an "HTMLFormElement:"
 if (projectForm && projectForm instanceof HTMLFormElement){
 	
-	// Forms have an Event called "SUBMIT" when the project clicks one of the designated buttons
-	//	also it passes data through the fn, to catch it is used the arg "e"
+		// Forms have an Event called "SUBMIT" when the project clicks one of the designated buttons
+		//	also it passes data through the fn, to catch it is used the arg "e"
 	projectForm.addEventListener("submit", (e) => {
 		// To prevent the Default behavior which is to reload the page:
 		e.preventDefault()
@@ -341,18 +311,38 @@ if (projectForm && projectForm instanceof HTMLFormElement){
 			console.log("Form closed by the user. Data discarted")
 		})
 	}
-	else{
-		console.warn("Button Cancel was not found in the structure");
-	}
-
+	else{console.warn("Button Cancel was not found in the structure")};
 }
-else{
-	console.warn("Form Id was not found. Check the ID form!")
+else{console.warn("Form Id was not found. Check the ID form!")};
+
+
+	// TO OPEN EDIT PRJCT/ USER MODAL:::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+		// For Edit Project Details Button
+if(editProjectBtn){
+	editProjectBtn.addEventListener("click", () => {
+
+		// To get the current selected project from the PM and check if exists
+		const project = projectsManager.currentProject;
+        if(!project){
+            console.warn("No project selected");
+            return;
+        }
+		const modal = document.getElementById("new_project_modal");
+
+		console.log(modal);
+		console.log(modal?.constructor.name);
+        toggleForm("new_project_modal", "open");
+		console.log("Edit Project Details Button Clicked")
+		console.log(projectsManager.currentProject);
+	})
 }
+else{console.warn("Button Edit Project Details was not found in the structure")};
 
 
+	// FOR JSON FILES :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-// To Export JSON files USER:::
+		// To Export JSON files USER_________________________________________
 const exportUsersBtn = document.getElementById("export_users_btn");
 if(!exportUsersBtn) {throw new Error("Export button does not exists")}
 else{
@@ -361,7 +351,7 @@ else{
 		})
 	}
 
-// To Export JSON files PROJECT:::
+	// To Export JSON files PROJECT________________________________________
 const exportProjectsBtn = document.getElementById("export_projects_btn");
 if(!exportProjectsBtn) {throw new Error("Export button does not exists")}
 else{
@@ -370,7 +360,7 @@ else{
 		})
 	}
 
-// To import JSON files USER:::
+	// To import JSON files USER____________________________________________
 const importUsersBtn = document.getElementById("import_users_btn");
 if(!importUsersBtn) {throw new Error("Import button does not exist")}
 else{
@@ -379,7 +369,7 @@ else{
 		})
 	}
 
-// To import JSON files PROJECT:::
+	// To import JSON files PROJECT__________________________________________
 const importProjectsBtn = document.getElementById("import_projects_btn");
 if(!importProjectsBtn) {throw new Error("Import button does not exist")}
 else{
@@ -389,7 +379,9 @@ else{
 	}
 
 
-// To Change Page from Side bar Buttons:
+	// SIDEBAR NAVIGATION: To Change Page from Buttons::::::::::::::::::::::::::::::::::::
+
+		// For Users Btn____________________________________________________
 if(!btnUsers) { throw new Error("Users Btn (sidebar) does not exist") }
 else{
 	btnUsers.addEventListener("click", () => {
@@ -397,6 +389,7 @@ else{
 	})
 }
 
+		// For Projects Btn__________________________________________________
 if(!btnProjects) { console.warn("Projects Btn (sidebar) does not exist") }
 else{
 	btnProjects.addEventListener("click", () => {
@@ -404,5 +397,7 @@ else{
 	})
 }
 
+
+// APP INITIAL PAGE:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 // To start by Default the page in the Projects List Page:
 navigateToPage("projects_list_page");

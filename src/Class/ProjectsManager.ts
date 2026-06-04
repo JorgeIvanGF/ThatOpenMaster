@@ -9,8 +9,9 @@ export class ProjectsManager{
 	list: Project[] = [];	//	Define the Property List of users
 	ui: HTMLElement; 	// The container to storage all the users cards created
 	private onProjectClickCallback?: (project: Project) => void; // To save the action in a centralized way
-	
+	currentProject: Project | null = null; // To keep track of the currently selected project (if any)
 
+	
 	//	METHODS...................................
 	
 		// Constructor:
@@ -59,6 +60,8 @@ export class ProjectsManager{
 		// ONLY works If the USER clicks on an Project
 		if(this.onProjectClickCallback){
 			project.ui.addEventListener("click", () => {
+				this.currentProject = project;
+				console.log(`Current Project: ${this.currentProject.name}`); // TO DEBUG
 				this.setProjectDetailsPage(project); // To fill the info with the Details of the selected user
 				this.onProjectClickCallback!(project); // the "!" to assure the FN exists. To execute the page change
 			})

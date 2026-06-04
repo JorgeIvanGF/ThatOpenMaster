@@ -8,32 +8,9 @@
 	<link rel="stylesheet" href="style.css"> <!-- To reference a CSS file -->
 </head>
 <body>
-	<!-- Sidebar______________________________________________________________________________ -->
-	<aside id="sidebar">
-		<img id="company-logo" src="./Assets/companylogo.svg" alt="Construction Company logo">
-		<!-- <ul id="nav_buttons">
-			<li id="projectsBtn"><span class="material-icons-outlined">computer</span> Projects</li>
-			<li id="usersBtn"><span class="material-icons-outlined">how_to_reg</span> Users</li>
-		</ul> -->
-		<ul id="nav-list"> <li class="nav-item">
-      		<button type="button" class="nav-button" id="projectsBtn">
-        	<span class="material-icons-outlined">computer</span>
-        	<span class="button-text">Projects</span>
-      		</button>
-   			</li>
-			<li class="nav-item">
-			<button type="button" class="nav-button" id="usersBtn">
-				<span class="material-icons-outlined">how_to_reg</span>
-				<span class="button-text">Users</span>
-			</button>
-			</li>
-		</ul>
-	</aside>
-	<!-- Main Content__________________________________________________________________________ -->
-	<main id="content">
-		<div id="projects_list_page" class="page"  >
-			<!-- FORM _________________ -->
-			<dialog id="new_project_modal"> <!-- to create the Modal Container -->
+	<!-- GLOBAL MODALS (FORMS)_________________________________________________________________ -->
+		<!-- Project Modal Form -->
+	 <dialog id="new_project_modal"> <!-- to create the Modal Container -->
 				<form id="new_project_form"> <!-- to create the Form -->
 					<h2>New Project</h2>
 					<div class="input_list">
@@ -76,6 +53,77 @@
 					</div>
 				</form>
 			</dialog>
+		<!--  User Modal Form__ -->
+	<dialog id="new_user_modal"> <!-- to create the Modal Container -->
+		<form id="new_user_form"> <!-- to create the Form -->
+			<h2>New User</h2>
+			<div class="input_list">
+				<div class="form_field_container">
+					<label><span class="material-icons-outlined">badge</span>Name</label>
+					<input name="name" type="text" placeholder="Provide the name of the new user"> <!-- Notice: "input" is a SELFCLOSED tag -->
+				</div>
+				<div class="form_field_container">
+					<label><span class="material-icons-outlined">portrait</span>Username</label>
+					<input name="username" type="text" placeholder="Provide the username of the new user"></textarea>
+				</div>
+				<div class="form_field_container">
+					<label><span class="material-icons-outlined">person</span>Role</label>
+					<select name="role">
+						<option>Architect</option>
+						<option>Engineer</option>
+						<option>Teacher</option>
+					</select>
+				</div>
+				<div class="form_field_container">
+					<label><span class="material-icons-outlined">verified_user</span>Status</label>
+					<select name="status">
+						<option>Active</option>
+						<option>Inactive</option>
+					</select>
+				</div>
+				<div class="form_field_container">
+					<label><span class="material-icons-outlined">email</span>Email</label>
+					<input name="email" type="text" placeholder="Provide the email of the new user">
+				</div>
+				<div class="form_field_container">
+					<label><span class="material-icons-outlined">call</span>Telephone</label>
+					<input name="telephone" type="number" placeholder="Provide the telephone number of the new user">
+				</div>
+			</div>
+			<div id="form_buttons">
+				<button id="cancel_user" type="button" class="cancel_btn">Cancel</button>
+				<button id="accept_user" type="submit" class="accept_btn">Accept</button> <!-- type:submit to inform JavaScript this is the submitted btn -->
+			</div>
+		</form>
+	</dialog>
+
+	<!-- SIDEBAR______________________________________________________________________________ -->
+	<aside id="sidebar">
+		<img id="company-logo" src="./Assets/companylogo.svg" alt="Construction Company logo">
+		<!-- <ul id="nav_buttons">
+			<li id="projectsBtn"><span class="material-icons-outlined">computer</span> Projects</li>
+			<li id="usersBtn"><span class="material-icons-outlined">how_to_reg</span> Users</li>
+		</ul> -->
+		<ul id="nav-list"> <li class="nav-item">
+      		<button type="button" class="nav-button" id="projectsBtn">
+        	<span class="material-icons-outlined">computer</span>
+        	<span class="button-text">Projects</span>
+      		</button>
+   			</li>
+			<li class="nav-item">
+			<button type="button" class="nav-button" id="usersBtn">
+				<span class="material-icons-outlined">how_to_reg</span>
+				<span class="button-text">Users</span>
+			</button>
+			</li>
+		</ul>
+	</aside>
+
+	<!-- MAIN CONTENT__________________________________________________________________________ -->
+	<main id="content">
+		<div id="projects_list_page" class="page"  >
+			<!-- FORM _________________ -->
+			
 			<!-- HEADER ______________________ -->
 			<header id="page_header">
 				<h2>Projects</h2>
@@ -110,7 +158,7 @@
 						<!-- Circle title and Edit -->
 						<div style="display: flex; justify-content: space-between; align-items:center; margin-bottom:20px">
 							<p data-project-info="initials">HC</p>
-							<button id="btn_prj_details" class="sub_btn">Edit</button>
+							<button type="button" id="btn_prj_details" class="sub_btn">Edit</button>
 						</div>
 						<!-- Title and Subtitle -->
 						<div style="margin-bottom: 20px;">
@@ -192,50 +240,7 @@
 
 		</div>
 		<div id="users_list_page" class="page hidden">
-			<!-- Form of New User -->
 			 <!-- FORM _________________ -->
-			<dialog id="new_user_modal"> <!-- to create the Modal Container -->
-				<form id="new_user_form"> <!-- to create the Form -->
-					<h2>New User</h2>
-					<div class="input_list">
-						<div class="form_field_container">
-							<label><span class="material-icons-outlined">badge</span>Name</label>
-							<input name="name" type="text" placeholder="Provide the name of the new user"> <!-- Notice: "input" is a SELFCLOSED tag -->
-						</div>
-						<div class="form_field_container">
-							<label><span class="material-icons-outlined">portrait</span>Username</label>
-							<input name="username" type="text" placeholder="Provide the username of the new user"></textarea>
-						</div>
-						<div class="form_field_container">
-							<label><span class="material-icons-outlined">person</span>Role</label>
-							<select name="role">
-								<option>Architect</option>
-								<option>Engineer</option>
-								<option>Teacher</option>
-							</select>
-						</div>
-						<div class="form_field_container">
-							<label><span class="material-icons-outlined">verified_user</span>Status</label>
-							<select name="status">
-								<option>Active</option>
-								<option>Inactive</option>
-							</select>
-						</div>
-						<div class="form_field_container">
-							<label><span class="material-icons-outlined">email</span>Email</label>
-							<input name="email" type="text" placeholder="Provide the email of the new user">
-						</div>
-						<div class="form_field_container">
-							<label><span class="material-icons-outlined">call</span>Telephone</label>
-							<input name="telephone" type="number" placeholder="Provide the telephone number of the new user">
-						</div>
-					</div>
-					<div id="form_buttons">
-						<button id="cancel_user" type="button" class="cancel_btn">Cancel</button>
-						<button id="accept_user" type="submit" class="accept_btn">Accept</button> <!-- type:submit to inform JavaScript this is the submitted btn -->
-					</div>
-				</form>
-			</dialog>
 			<!-- Header -->
 			<header id="list_users_header" style="border-bottom: solid #c7bfbf 2px; padding: 30px 20px 30px">
 				<h2>Users</h2>
@@ -280,7 +285,7 @@
 						<div style="display: flex; justify-content: space-between; align-items:center; margin-bottom:20px">
 							<!-- <p style="font-size: 21px; background-color:#c86918; aspect-ratio:1; border-radius:100%; padding:15px;">HC</p> -->
 							 <p style="background-color: #c86918; width: 50px; height: 50px; border-radius: 50%; font-size: 20px; font-weight: bold; margin: 0; display: flex; align-items: center; justify-content: center;">HC</p>
-							<button id="btn_prj_details" class="sub_btn">Edit</button>
+							<button id="btn_usr_details" class="sub_btn">Edit</button>
 						</div>
 						<!-- Title and Subtitle -->
 						<div style="margin-bottom: 20px;">

@@ -1,5 +1,5 @@
 // IMPORTS___________________________________________________________
-import { Project, IProject, UserRole, ProjectStatus } from "./Project";
+import { Project, IProject, UserRole, ProjectStatus, IToDo, ToDoStatus } from "./Project";
 
 // CLASS____________________________________________________________
 export class ProjectsManager{

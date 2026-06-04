@@ -6,8 +6,11 @@ import{v4 as uuidv4} from 'uuid'; // To use the UUID generator
 // Creation of SPECIFIC TYPES.............................................................................
 export type ProjectStatus = "Pending" | "Active" | "Finished"
 export type UserRole = "Architect" | "Engineer" | "Developer"
+export type ToDoStatus = "Pending" | "In Progress" | "Done"
 
-// Interface
+// Interfaces
+
+	// IProject: This interface defines the structure of a Project)_______________________________________
 export interface IProject {
 	name: string
 	description: string
@@ -16,6 +19,15 @@ export interface IProject {
 	finishDate: Date
 	id?: string //optional, because it will be generated in the constructor if not provided
 	progress?: number // Optional, because it will be added later in the process
+	toDos?: IToDo[] 
+}
+
+	// IToDo: This interface defines the structure of a To-Do item)_______________________________________
+export interface IToDo {
+	//title: string
+	description: string
+	status: ToDoStatus
+	id?: string //optional, because it will be generated in the constructor if not provided
 }
 
 // Array defining a set of initial colors for project cards, which can be used to style the UI elements dynamically.
@@ -31,6 +43,9 @@ const INITIAL_COLORS = [
 
 // The Class itself
 export class Project implements IProject {
+
+	// PROPERTIES::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
 	//To satisfy IProject
 	name: string
 	description: string
@@ -38,6 +53,7 @@ export class Project implements IProject {
 	userRole: "Architect" | "Engineer" | "Developer"
 	finishDate: Date
 	progress?: number // Optional, because it will be added later in the process
+	toDos: IToDo[] // To store the list of ToDos related to the project
 	
 	//Class internals
 	ui: HTMLDivElement
@@ -45,7 +61,10 @@ export class Project implements IProject {
 	id: string
 	color: string
 
-	// Constructor
+
+	// METHODS:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+	// Constructor______________________________________________________________
 	constructor(data: IProject) {
 
 		// if the name is empty or only spaces or less than 5 characters, assign "Untitled Project" as default name, otherwise use the provided name
@@ -77,56 +96,59 @@ export class Project implements IProject {
         const colorIndex = charCodeSum % INITIAL_COLORS.length;
         this.color = INITIAL_COLORS[colorIndex]; // Store the assigned color in the project instance
 
+		// If no ToDos are provided, initialize an empty array
+		this.toDos = data.toDos || [];
+
 		this.ui = this.setUI();
  	}
 
-	// Creates the Project Card UI
+	// Creates the Project Card UI___________________________________________________________
 	setUI():HTMLDivElement {
 
-	if (this.ui) {throw new Error("UI already exists")}
-	this.ui = document.createElement("div")
-	this.ui.className = "project_card"
+		if (this.ui) {throw new Error("UI already exists")}
+		this.ui = document.createElement("div")
+		this.ui.className = "project_card"
 
 
-	// Calculate the initials for the project card:
-	const words = this.name.trim().split(/\s+/);
-	const initials = words.length > 1 
-		? (words[0][0] + words[1][0]).toUpperCase()
-		: this.name.substring(0, 2).toUpperCase();
+		// Calculate the initials for the project card:
+		const words = this.name.trim().split(/\s+/);
+		const initials = words.length > 1 
+			? (words[0][0] + words[1][0]).toUpperCase()
+			: this.name.substring(0, 2).toUpperCase();
 
-	this.ui.innerHTML = `
-	<div class="card_header">
-		<p data-project-info="initials" 
-		style="background-color:${this.color}"> ${initials}
-		</p>
-		<div>
-		<h5>${this.name}</h5>
-		<p data-project-info="description-cards">${this.description}</p>
+		this.ui.innerHTML = `
+		<div class="card_header">
+			<p data-project-info="initials" 
+			style="background-color:${this.color}"> ${initials}
+			</p>
+			<div>
+			<h5>${this.name}</h5>
+			<p data-project-info="description-cards">${this.description}</p>
+			</div>
 		</div>
-	</div>
-	<div class="card_content">
-		<div class="card_property">
-		<p style="color: #b7b7b7;">Status</p>
-		<p>${this.status}</p>
-		</div>
-		<div class="card_property">
-		<p style="color: #b7b7b7;">Role</p>
-		<p>${this.userRole}</p>
-		</div>
-		<div class="card_property">
-		<p style="color: #b7b7b7;">Cost</p>
-		<p>$${this.cost}</p>
-		</div>
-		<div class="card_property">
-		<p style="color: #b7b7b7;">Progress</p>
-		<p>${this.progress}%</p>
-		</div>
-	</div>`
-	return this.ui;
+		<div class="card_content">
+			<div class="card_property">
+			<p style="color: #b7b7b7;">Status</p>
+			<p>${this.status}</p>
+			</div>
+			<div class="card_property">
+			<p style="color: #b7b7b7;">Role</p>
+			<p>${this.userRole}</p>
+			</div>
+			<div class="card_property">
+			<p style="color: #b7b7b7;">Cost</p>
+			<p>$${this.cost}</p>
+			</div>
+			<div class="card_property">
+			<p style="color: #b7b7b7;">Progress</p>
+			<p>${this.progress}%</p>
+			</div>
+		</div>`
+		return this.ui;
 	}
 
 
-	// To update the project with new data and refresh the UI accordingly
+	// To update the project with new data and refresh the UI accordingly_________________________________
 	refreshUI(): void {
 
 		const title = this.ui.querySelector("h5");
@@ -154,6 +176,32 @@ export class Project implements IProject {
 
 			initialsElement.textContent = initials;
 		}
+	}
+
+
+	// ToDos Management Methods ---------------------------------------------------------
+
+	// To add a new ToDo to the project____________________________________________________
+	addToDo(todo: IToDo): void {
+
+		this.toDos.push({
+
+			...todo,
+			id: todo.id || uuidv4()
+
+			/* its the same as:
+			title: todo.title,
+			description: todo.description,
+			status: todo.status,
+			id: todo.id || uuidv4() */
+		
+		});
+	}
+
+	// To Get a specific ToDo by its ID__________________________________________________
+	getToDo(id: string): IToDo | undefined {
+
+		return this.toDos.find(todo => todo.id === id);
 	}
 
 }

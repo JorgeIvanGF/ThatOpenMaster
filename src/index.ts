@@ -308,7 +308,7 @@ if (projectForm && projectForm instanceof HTMLFormElement){
 					console.log("Editing project...");
 					console.log("Project before edit:", editingProject); 
 	/* 				console.log("El Projecto Que llega al ser EDITADO") // DEBUG
-					console.log(projectObj); // DEBUG */
+					console.log(projectObj); // DEBUG */	
 
 					projectsManager.updateProject(
 						editingProject,
@@ -375,6 +375,18 @@ if(editProjectBtn){
             console.warn("No project selected");
             return;
         }
+
+		// TEMP__________________________________________
+		project.addToDo({
+			description: "My First Task",
+			status: "Pending"
+		});
+
+		console.log("Project with new ToDo added:");
+		console.log(project.toDos);
+		// ______________________________________________
+
+
 		// To storage the current project in a var to use it in the form
 		editingProject = project;
 
@@ -392,16 +404,7 @@ if(editProjectBtn){
 			(projectForm.elements.namedItem("progress") as HTMLInputElement).value = String(project.progress ?? 0);
 		}
 
-/* 		projectsManager.updateProject(project, {
-			name: "Proyecto Editado",
-			description: "Descripción Editada",
-			status: "Finished",
-			userRole: "Developer",
-			finishDate: new Date(),
-			progress: 100
-		}); */
-
-		console.log(project);
+		console.log(project); // to DEBUG
 
 		const modal = document.getElementById("new_project_modal");
         toggleForm("new_project_modal", "open");

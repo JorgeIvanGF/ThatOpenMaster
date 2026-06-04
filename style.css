@@ -118,36 +118,36 @@ button:hover{
  
 
 #nav-list { /* Cambiado a kebab-case para seguir las buenas prácticas */
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    padding: 0;      /* Remueve el padding por defecto que traen las listas (ul) */
-    margin: 0;       /* Remueve el margin por defecto */
-    list-style: none; /* Quitamos los puntos (bullets) aquí, en el contenedor padre */
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+	padding: 0;      /* Remueve el padding por defecto que traen las listas (ul) */
+	margin: 0;       /* Remueve el margin por defecto */
+	list-style: none; /* Quitamos los puntos (bullets) aquí, en el contenedor padre */
 }
 
 /* For styling the button INSIDE the list item */
 #nav-list .nav-button {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    padding: 10px;
-    border-radius: 15px;
-    font-size: var(--font_xl);
-    cursor: pointer;
+	display: flex;
+	align-items: center;
+	gap: 15px;
+	padding: 10px;
+	border-radius: 15px;
+	font-size: var(--font_xl);
+	cursor: pointer;
 	height: 40px;
-    
-    /* RESET DE BOTÓN: Esto es clave para limpiar los estilos por defecto del navegador */
-    background: transparent; 
-    border: none;
-    color: white; /* Hereda el color blanco que tenías */
-    width: 100%;  /* Hace que el botón ocupe todo el ancho disponible */
-    text-align: left; /* Alinea el texto a la izquierda */
+	
+	/* RESET DE BOTÓN: Esto es clave para limpiar los estilos por defecto del navegador */
+	background: transparent; 
+	border: none;
+	color: white; /* Hereda el color blanco que tenías */
+	width: 100%;  /* Hace que el botón ocupe todo el ancho disponible */
+	text-align: left; /* Alinea el texto a la izquierda */
 }
 
 /* (Pseudo-Class) For coloring when the User hovers over the button */
 #nav-list .nav-button:hover {
-    background-color: var(--primary);
+	background-color: var(--primary);
 }
 
 
@@ -191,32 +191,32 @@ header {
 /* ***********************   CARDS   ************************************ */
 
 .card_header {
-    display: flex;
-    column-gap: 15px; /* Reducido un poco para dar más espacio al texto */
-    padding: 15px 20px;
-    justify-content: flex-start;
-    align-items: center;
-    border-bottom: 2px solid #cacaca;
-    
-    /* 🚀 CAMBIO CLAVE: Quitamos height fijo y usamos min-height o dejamos que respire */
-    min-height: 50px; 
+	display: flex;
+	column-gap: 15px; /* Reducido un poco para dar más espacio al texto */
+	padding: 15px 20px;
+	justify-content: flex-start;
+	align-items: center;
+	border-bottom: 2px solid #cacaca;
+	
+	/* 🚀 CAMBIO CLAVE: Quitamos height fijo y usamos min-height o dejamos que respire */
+	min-height: 50px; 
 }
 
 /* Modifica el contenedor del texto dentro del header */
 .card_header div {
-    display: flex;
-    flex-direction: column;
-    min-width: 0; /* Permite que los textos internos se enteren del ancho real */
-    flex-grow: 1; /* Hace que use todo el espacio restante */
+	display: flex;
+	flex-direction: column;
+	min-width: 0; /* Permite que los textos internos se enteren del ancho real */
+	flex-grow: 1; /* Hace que use todo el espacio restante */
 }
 
 /* 🚀 NUEVO: Control estricto para el título y la descripción de la tarjeta */
 .card_header h3, .card_header h4, .card_header h5{
-    margin: 0;
-    font-size: var(--font_xl);
-    white-space: nowrap;      /* Fuerza al título a estar en una sola línea */
-    overflow: hidden;         /* Oculta lo sobrante */
-    text-overflow: ellipsis;  /* Agrega el "..." si es muy largo */
+	margin: 0;
+	font-size: var(--font_xl);
+	white-space: nowrap;      /* Fuerza al título a estar en una sola línea */
+	overflow: hidden;         /* Oculta lo sobrante */
+	text-overflow: ellipsis;  /* Agrega el "..." si es muy largo */
 }
 
 [data-project-info="initials"] {
@@ -226,25 +226,25 @@ header {
 	border-radius: 8px;
 	aspect-ratio: 1;
 	color: #ffffff;
-    font-size: var(--font_3xl);
+	font-size: var(--font_3xl);
 	font-weight: bold;
 	text-align: center;
 }
 
 [data-project-info="description-cards"]{
 	color: #b7b7b7;
-    font-size: var(--font_sm);
-    margin-top: 2px;
-    
-    /* 🚀 EFECTO TRUNCADO MULTILÍNEA: Corta a máximo 2 líneas y pone "..." */
-    display: -webkit-box;
-    -webkit-line-clamp: 2; 
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    
-    /* Seguridad por si escriben una palabra gigante sin espacios */
-    word-break: break-all;
+	font-size: var(--font_sm);
+	margin-top: 2px;
+	
+	/* 🚀 EFECTO TRUNCADO MULTILÍNEA: Corta a máximo 2 líneas y pone "..." */
+	display: -webkit-box;
+	-webkit-line-clamp: 2; 
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	
+	/* Seguridad por si escriben una palabra gigante sin espacios */
+	word-break: break-all;
 }
 
 
@@ -358,7 +358,7 @@ form .form_field_container label {
 
 /* The "SWITCH" to hide a page*/
 .page.hidden { /* it says have BOTH classes together */
-    display: none !important; /* "!important" means this rule is OVER any other*/
+	display: none !important; /* "!important" means this rule is OVER any other*/
 } 
 
 .dashboard_card{
@@ -411,12 +411,18 @@ form .form_field_container label {
 }
 
 .sub_btn {
-    background-color: var(--background_content_100);
-    border-width: 1.8px;
-    border-color: #e5e5ea;
-    border-style: solid;
+	background-color: var(--background_content_100);
+	border-width: 1.8px;
+	border-color: #e5e5ea;
+	border-style: solid;
 	color:white;
 	font-size: 13px;
+}
+
+#btn_create_todo {
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 /* For Import/Export JSON files*/
@@ -432,24 +438,24 @@ form .form_field_container label {
 }
 
 .details_container > div {
-    flex: 1; /* Esto obliga a los 4 divs a estirarse y dividirse el espacio en partes exactamente iguales */	
+	flex: 1; /* Esto obliga a los 4 divs a estirarse y dividirse el espacio en partes exactamente iguales */	
 }
 .details_container > div > p {
-    font-size: 14px; /* Modifica el tamaño de la fuente */	
+	font-size: 14px; /* Modifica el tamaño de la fuente */	
 }
 
 /* 🚀 LA MAGIA DE LAS ALINEACIONES COMIENZA AQUÍ: */
 /* El primero de todos alineado a la izquierda */
 .details_container > div:first-child {
-    text-align: left;
+	text-align: left;
 }
 /* El último de todos alineado a la derecha */
 .details_container > div:last-child {
-    text-align: right;
+	text-align: right;
 }
 /* Los contenedores que NO sean ni el primero ni el último se alinean al centro */
 .details_container > div:not(:first-child):not(:last-child) {
-    text-align: center;
+	text-align: center;
 }
 
 
@@ -460,59 +466,59 @@ form .form_field_container label {
 }
 
 .user_details_container > div {
-    flex: 1; /* Esto obliga a los 4 divs a estirarse y dividirse el espacio en partes exactamente iguales */	
+	flex: 1; /* Esto obliga a los 4 divs a estirarse y dividirse el espacio en partes exactamente iguales */	
 }
 .user_details_container > div > p {
-    font-size: 14px; /* Modifica el tamaño de la fuente */	
+	font-size: 14px; /* Modifica el tamaño de la fuente */	
 }
 
 /* 🚀 LA MAGIA DE LAS ALINEACIONES COMIENZA AQUÍ: */
 /* El primero de todos alineado a la izquierda */
 .user_details_container > div:first-child {
-    text-align: left;
+	text-align: left;
 }
 /* El último de todos alineado a la derecha */
 .user_details_container > div:last-child {
-    text-align: right;
+	text-align: right;
 }
 /* Los contenedores que NO sean ni el primero ni el último se alinean al centro */
 .user_details_container > div:not(:first-child):not(:last-child) {
-    text-align: center;
+	text-align: center;
 }
 
 /* BARRA DE PROGRESO */
 /* 1. El fondo de la barra (Gris oscuro) */
 .progress_container {
 	/* display: flex; */
-    width: 100%;                  /* Ocupa todo el ancho disponible */
-    background-color: #858585;    /* Color gris oscuro de fondo */
-    height: 28px;                 /* Altura de la barra */
-    border-radius: 14px;          /* Bordes completamente redondeados */
-    margin-top: 20px;             /* Separa la barra de los detalles de arriba */
-    overflow: hidden;             /* Esconde cualquier esquina del hijo que intente salirse */
+	width: 100%;                  /* Ocupa todo el ancho disponible */
+	background-color: #858585;    /* Color gris oscuro de fondo */
+	height: 28px;                 /* Altura de la barra */
+	border-radius: 14px;          /* Bordes completamente redondeados */
+	margin-top: 20px;             /* Separa la barra de los detalles de arriba */
+	overflow: hidden;             /* Esconde cualquier esquina del hijo que intente salirse */
 }
 
 /* 2. El relleno de la barra (Verde relleno) */
 .progress_bar {
-    height: 100%;                 /* Ocupa todo el alto del padre */
-    background-color: #00aa00;    /* Color verde brillante */
-    border-radius: 14px;          /* Mismo redondeado para que encaje perfecto */
+	height: 100%;                 /* Ocupa todo el alto del padre */
+	background-color: #00aa00;    /* Color verde brillante */
+	border-radius: 14px;          /* Mismo redondeado para que encaje perfecto */
 	/* width: 80%;   */                 /* El porcentaje ocupado del Padre
-    
-    /* Flexbox aquí para centrar el texto "80%" vertical y horizontalmente */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    
-    /* Animación opcional para que se vea premium al cargar */
-    transition: width 0.5s ease-in-out; 
+	
+	/* Flexbox aquí para centrar el texto "80%" vertical y horizontalmente */
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	
+	/* Animación opcional para que se vea premium al cargar */
+	transition: width 0.5s ease-in-out; 
 }
 
 /* 3. El texto del porcentaje (80%) */
 .progress_text {
-    color: #ffffff;               /* Texto blanco */
-    font-size: 14px;              /* Tamaño de letra adecuado */
-    font-weight: bold;            /* Letra negrita para que resalte */
+	color: #ffffff;               /* Texto blanco */
+	font-size: 14px;              /* Tamaño de letra adecuado */
+	font-weight: bold;            /* Letra negrita para que resalte */
 }
 
 /* TO-DO Container_______________________________ */
@@ -528,23 +534,23 @@ form .form_field_container label {
 
 .table_header_titles{
 	display: flex;
-    width: 100%;
+	width: 100%;
 	padding: 0px;/* 👈 Ponemos 0 a los lados para que use todo el ancho horizontal */
-    background-color: transparent; /* O el color que prefieras */
-    border-bottom: solid #c7bfbf 1px; /* Una línea sutil abajo para cerrar la fila */
+	background-color: transparent; /* O el color que prefieras */
+	border-bottom: solid #c7bfbf 1px; /* Una línea sutil abajo para cerrar la fila */
 	font-weight: 500;
 }
 
 /* 🚀 Cada una de las 6 columnas de la tabla */
 .table_header_titles > div {
-    flex: 1;              /* Se dividen el espacio exactamente en 6 partes iguales */
-    text-align: center;   /* Centra el texto dentro de su propia porción */
-    padding: 12px 10px;      /* Espacio interno para que el texto no toque los bordes */
+	flex: 1;              /* Se dividen el espacio exactamente en 6 partes iguales */
+	text-align: center;   /* Centra el texto dentro de su propia porción */
+	padding: 12px 10px;      /* Espacio interno para que el texto no toque los bordes */
 }
 
 /* 🎯 El truco de las líneas divisorias */
 .table_header_titles > div:not(:last-child) {
-    border-right: solid #c7bfbf 2px; /* Añade un borde a la derecha a todos, MENOS al último */
+	border-right: solid #c7bfbf 2px; /* Añade un borde a la derecha a todos, MENOS al último */
 }
 
 .info_users_card{
@@ -565,11 +571,11 @@ form .form_field_container label {
 }
 
 .info_users_card > div > p {
-    margin: 0;
-    /* 🚀 TRUCO DE RECORTE: */
+	margin: 0;
+	/* 🚀 TRUCO DE RECORTE: */
 	text-wrap: nowrap;       /* Fuerza a que el texto esté en una sola línea */
-    overflow: hidden;          /* Esconde todo lo que se salga del div */
-    text-overflow: ellipsis;   /* Reemplaza el texto oculto por "..." */
+	overflow: hidden;          /* Esconde todo lo que se salga del div */
+	text-overflow: ellipsis;   /* Reemplaza el texto oculto por "..." */
 	font-size: var(--font_base);
 }
 
@@ -584,66 +590,66 @@ form .form_field_container label {
 /* Main Container */
 #error_modal{
 
-    background-color: transparent;
+	background-color: transparent;
 
-    border: none;
+	border: none;
 
-    margin: auto;
+	margin: auto;
 }
 
 /* Backdrop */
 #error_modal::backdrop{
 
-    background-color: rgba(0, 0, 0, 0.55);
+	background-color: rgba(0, 0, 0, 0.55);
 
-    backdrop-filter: blur(4px);
+	backdrop-filter: blur(4px);
 }
 
 /* Content */
 .error_modal_content{
 
-    width: 380px;
-    background-color: var(--background_card);
-    border-radius: 14px;
-    padding: 25px;
-    display: flex;
-    flex-direction: column;
-    gap: 25px;
-    box-shadow: 0px 10px 40px rgba(0,0,0,0.35);
-    border: solid 1px rgba(255,255,255,0.08);
-    animation: modalAppear 0.35s ease; /* For Animation (in the end of the file is defined the Animations*/
+	width: 380px;
+	background-color: var(--background_card);
+	border-radius: 14px;
+	padding: 25px;
+	display: flex;
+	flex-direction: column;
+	gap: 25px;
+	box-shadow: 0px 10px 40px rgba(0,0,0,0.35);
+	border: solid 1px rgba(255,255,255,0.08);
+	animation: modalAppear 0.35s ease; /* For Animation (in the end of the file is defined the Animations*/
 
 }
 
 /* Header */
 .error_modal_header{
 
-    display: flex;
-    align-items: center;
-    gap: 12px;
+	display: flex;
+	align-items: center;
+	gap: 12px;
 	color: #ffffff;
 }
 
 .error_modal_header span{
 
-    color: #ff5b5b;
-    font-size: 32px;	
+	color: #ff5b5b;
+	font-size: 32px;	
 }
 
 
 /* Error Message */
 #error_message{
 
-    color: rgba(255,255,255,0.82);
-    line-height: 1.6;
-    font-size: var(--font_base);
+	color: rgba(255,255,255,0.82);
+	line-height: 1.6;
+	font-size: var(--font_base);
 }
 
 /* Footer */
 .error_modal_footer{
 
-    display: flex;
-    justify-content: flex-end;
+	display: flex;
+	justify-content: flex-end;
 }
 
 
@@ -652,12 +658,12 @@ form .form_field_container label {
 
 /* For the Modal Error */
 @keyframes modalAppear{
-    from{
-        opacity: 0;
-        transform: translateY(0px) scale(0.56);
-    }
-    to{
-        opacity: 1;
-        transform: translateY(0px) scale(1);
-    }
+	from{
+		opacity: 0;
+		transform: translateY(0px) scale(0.56);
+	}
+	to{
+		opacity: 1;
+		transform: translateY(0px) scale(1);
+	}
 }

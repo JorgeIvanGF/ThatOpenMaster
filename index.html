@@ -95,7 +95,22 @@
 				<button id="accept_user" type="submit" class="accept_btn">Accept</button> <!-- type:submit to inform JavaScript this is the submitted btn -->
 			</div>
 		</form>
+	
+	
 	</dialog>
+
+		<!-- ToDo Modal Form__ -->
+	<dialog id="new_todo_modal">
+		<form id="new_todo_form">
+			<input name="description" type="text"/>
+			<select name="status">
+				<option value="Pending">Pending</option>
+				<option value="In Progress">In Progress</option>
+				<option value="Done">Done</option>
+			</select>
+		</form>
+	</dialog>
+
 
 	<!-- SIDEBAR______________________________________________________________________________ -->
 	<aside id="sidebar">
@@ -203,17 +218,18 @@
 							<div style="display: flex; align-items: center; gap: 15px">
 								<span class="material-icons-outlined">search</span>
 								<input type="text" placeholder="Search To-Do's by name" style="width: 100%; font-size: 12px">
-								<span class="material-icons-outlined">add</span>
+								<button	type="button" id="btn_create_todo"	class="sub_btn"> + </button>
 							</div>
 						</div>
 						<!-- Bottom Part -->
-						 <div style="display: flex; flex-direction:column; row-gap: 10px;">
+							<!-- ToDo List Container -->
+						 <div id="todo_list_container" style="display: flex; flex-direction:column; row-gap: 10px;">
 							<!-- primer Item To-Do -->
 							<div class="to-do_Item">
 								<div style="display: flex; justify-content: space-between; align-items: center;">
 									<div style="display: flex; column-gap: 15px; align-items: center;">
 										<span class="material-icons-outlined" style="padding: 7px; background-color: #adadad; border-radius: 10px;">handyman</span>
-										<p>Put here whatever you want sdfgh fghjk fghjkl dfghjkl fghj fghjkl erftghjkl ertyuikol ertyuiklo fghjkl</p>
+										<p>Put here whatever you want </p>
 									</div>
 									<p style="text-wrap: nowrap; margin-left: 15px;">Fri, 20 sep</p>
 								</div>

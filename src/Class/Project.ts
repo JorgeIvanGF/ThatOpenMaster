@@ -28,6 +28,7 @@ export interface IToDo {
 	description: string
 	status: ToDoStatus
 	id?: string //optional, because it will be generated in the constructor if not provided
+	todo_Date: Date
 }
 
 // Array defining a set of initial colors for project cards, which can be used to style the UI elements dynamically.
@@ -184,16 +185,24 @@ export class Project implements IProject {
 	// To add a new ToDo to the project____________________________________________________
 	addToDo(todo: IToDo): void {
 
+		// To Sanitize and handle To-Do Dates(from JSON files)
+		let processedDate = new Date();
+		if (todo.todo_Date) {
+			const parsedDate = new Date(todo.todo_Date);
+			processedDate = isNaN(parsedDate.getTime()) ? new Date() : parsedDate;
+		}
+
 		this.toDos.push({
 
 			...todo,
-			id: todo.id || uuidv4()
+			id: todo.id || uuidv4(),
+			todo_Date: processedDate,
 
-			/* its the same as:
-			title: todo.title,
+			/* ----NOTE----:its the SAME as:
 			description: todo.description,
 			status: todo.status,
-			id: todo.id || uuidv4() */
+			id: todo.id || uuidv4()
+			todo_Date: todo.todo_Date */
 		
 		});
 	}

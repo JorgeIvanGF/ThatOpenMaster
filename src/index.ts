@@ -4,7 +4,7 @@
 import { User, IUser, roleType, statusType } from "./Class/User"
 import { UsersManager } from "./Class/UsersManager"
 
-import { Project, IProject, UserRole, ProjectStatus } from "./Class/Project"
+import { Project, IProject, UserRole, ProjectStatus, IToDo, ToDoStatus } from "./Class/Project"
 import { ProjectsManager } from "./Class/ProjectsManager"
 
 
@@ -73,6 +73,8 @@ function navigateToPage(targetPageId: string): void {
 const userForm = document.getElementById("new_user_form")
 const projectForm = document.getElementById("new_project_form")
 
+const todoForm = document.getElementById("new_todo_form");
+
 
 
 // BUTTONS :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -100,9 +102,14 @@ const errorMessage = document.getElementById("error_message") // The Message
 const cancelUserBtn = document.getElementById("cancel_user")
 const cancelProjectBtn = document.getElementById("cancel_project")
 
+const cancelTodoBtn = document.getElementById("cancel_todo");
+
 
 	// EDIT PRJ DETAILS BTN_____________________________________________________
 const editProjectBtn = document.getElementById("btn_prj_details")
+
+	// ADD TO-DO BTN__________________________________________________________
+const btnCreateTodo = document.getElementById("btn_create_todo");
 
 
 // CONTAINERS:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -225,14 +232,6 @@ if (userForm && userForm instanceof HTMLFormElement){
 				showError("Unknown error occurred")
 			}
 		}
-
-		// To Listen the Btn to close the Error Dialog in the browser
-		if(closeErrorModal && errorModal instanceof HTMLDialogElement){
-			closeErrorModal.addEventListener("click", () => {
-				errorModal.close()
-			})
-		}
-		
 	})
 
 	if(cancelUserBtn){
@@ -286,8 +285,6 @@ if (projectForm && projectForm instanceof HTMLFormElement){
 		
 		// To intercept the ERRORS:
 		try{
-
-
 				console.log("Mode:", projectFormMode);
 				console.log("Project being edited:", editingProject);
 
@@ -338,13 +335,6 @@ if (projectForm && projectForm instanceof HTMLFormElement){
 				showError("Unknown error occurred")
 			}
 		}
-
-		// To Listen the Btn to close the Error Dialog in the browser
-		if(closeErrorModal && errorModal instanceof HTMLDialogElement){
-			closeErrorModal.addEventListener("click", () => {
-				errorModal.close()
-			})
-		}		
 	})
 
 	if(cancelProjectBtn){
@@ -357,6 +347,7 @@ if (projectForm && projectForm instanceof HTMLFormElement){
 	else{console.warn("Button Cancel was not found in the structure")};
 }
 else{console.warn("Form Id was not found. Check the ID form!")};
+
 
 
 	// TO OPEN EDIT PRJCT/ USER MODAL:::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -376,11 +367,11 @@ if(editProjectBtn){
             return;
         }
 
-		// TEMP__________________________________________
+/* 		// TEMP__________________________________________
 		project.addToDo({
 			description: "My First Task",
 			status: "Pending"
-		});
+		}); */
 
 		console.log("Project with new ToDo added:");
 		console.log(project.toDos);
@@ -412,6 +403,112 @@ if(editProjectBtn){
 	})
 }
 else{console.warn("Button Edit Project Details was not found in the structure")};
+
+
+
+	// TO OPEN ADD TO-DO MODAL___________________________________________________________________
+if(btnCreateTodo){
+	btnCreateTodo.addEventListener("click", () => {
+
+		const currentProject = projectsManager.currentProject;
+
+		if(!currentProject){
+			showError("Please select a project first");
+			return;
+		}
+
+		toggleForm("new_todo_modal", "open");
+	});
+}
+
+
+	// The SUBMIT of To-Do ______________________________________________________________________
+if (todoForm && todoForm instanceof HTMLFormElement){
+
+	todoForm.addEventListener("submit", (e) => {
+		
+		e.preventDefault() // To prevent the Default behavior which is to reload the page:
+
+
+		const currentProject = projectsManager.currentProject;
+        if (!currentProject) {
+            showError("No active project found to add this task.");
+            return;
+        }
+
+		const formData = new FormData(todoForm)
+		// NOTES: * To get any value of the Formdata element (it has to be named in the INPUT/SELECT container of the HTML file):
+		//        * The fn .get() returns generally "string" type, no matter if you define the type in the HTML file
+		
+				
+		// Definition of an Object based on the info from formData:
+
+				//NOTE: Using the word "as" is ONLY recommended when is 100% confirmed the dataype of the "conversion"
+
+				//**** to Use the LocalTimeZone of the USER ***
+				// Check if is Exists and To change the format To "2026/03/30"		
+		const dateRaw = formData.get("todo_Date") as string; // it comes "2026-03-30"
+		const todoDateObj = dateRaw ? new Date(dateRaw.replace(/-/g, '\/')) : new Date();
+
+
+		const todoObj: IToDo = {
+
+			description: formData.get("description") as string,
+			status: formData.get("status") as ToDoStatus,
+			todo_Date: todoDateObj // Casted to Date type BEFORE
+		}
+		
+		// To intercept the ERRORS:
+		try{
+				
+				console.log("To-Do being added:", todoObj); // To DEBUG
+
+				// Agregamos el To-Do directamente a la instancia del proyecto seleccionado
+            	currentProject.addToDo(todoObj);
+
+				// Forzamos al manager a refrescar visualmente la vista de detalles del proyecto y sus tareas
+           		 projectsManager.updateProject(currentProject, currentProject);
+
+				
+				
+				// To Clean up the Form after submitted
+				todoForm.reset();
+				
+				// To close the Modal (Form)
+				toggleForm("new_todo_modal","close")
+
+				console.log(`To-Do succesfully added to the Project: ${currentProject.name}`); // To DEBUG	
+				console.log("Project afetr adding the To-Do:", currentProject); // To DEBUG
+			
+		}catch(error){
+			if (error instanceof Error) {showError(error.message)}
+			else {showError("Unknown error occurred")}
+		}
+	})
+	
+	// To Catch the Cancel Event
+	if(cancelProjectBtn){
+		cancelProjectBtn.addEventListener("click", () => {
+			if(projectForm instanceof HTMLFormElement){
+				projectForm.reset();
+				toggleForm("new_project_modal", "close");
+				console.log("Form closed by the user. Data discarted")
+			}
+		})
+	}else{console.warn("Button Cancel was not found in the structure")};
+}
+else{console.warn("To-Do Form Id was not found. Check the ID form!")}
+
+
+
+	// GLOBAL ERROR MODAL CLOSURE LISTENER:::::::::::::::::::::::::::::::::::::::::::::::::::::
+	// to close the Error Dialog in the browser only ONCE for ALL Forms
+
+if(closeErrorModal && errorModal instanceof HTMLDialogElement){
+	closeErrorModal.addEventListener("click", () => {
+		errorModal.close()
+	})
+}		
 
 
 	// FOR JSON FILES :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::

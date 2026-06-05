@@ -98,16 +98,38 @@
 	
 	
 	</dialog>
-
 		<!-- ToDo Modal Form__ -->
 	<dialog id="new_todo_modal">
 		<form id="new_todo_form">
-			<input name="description" type="text"/>
-			<select name="status">
-				<option value="Pending">Pending</option>
-				<option value="In Progress">In Progress</option>
-				<option value="Done">Done</option>
-			</select>
+			<!-- Top Part -->
+			<div>
+				<h2>New To-Do</h2>
+			</div>
+			<!-- Input Part -->
+			<div class="input_list">
+				<div class="form_field_container">
+					<label><span class="material-icons-outlined">text_snippet</span>Description</label>
+					<input name="description" type="text" placeholder="Describe the task"/>
+				</div>
+				<div class="form_field_container">
+					<label><span class="material-icons-outlined">verified_user</span>Status</label>
+					<select name="status">
+						<option value="Pending">Pending</option>
+						<option value="In Progress">In Progress</option>
+						<option value="Done">Done</option>
+					</select>
+				</div>
+				<div class="form_field_container">
+					<label><span class="material-icons-outlined">date_range</span>Date</label>
+					<input name="todo_Date" type="date">
+		
+				</div>
+			</div>
+			<!-- Bottom Part -->
+			<div id="form_buttons">
+				<button	type="button" id="cancel_todo" class="cancel_btn"> Cancel </button>
+				<button	type="submit" id="accept_todo" class="accept_btn"> Accept </button>
+			</div>
 		</form>
 	</dialog>
 
@@ -199,7 +221,7 @@
 								<p data-field-project="finish-date">2026-06-16</p>
 							</div>
 						 </div>
-						 <!-- Barra de Progreso CONTAINER -->
+						 <!-- Progress Bar CONTAINER -->
 						 <div class="progress_container">
     						<div data-field-project="progress-bar" class="progress_bar">
         						<span data-field-project="progress-text" class="progress_text">40%</span>
@@ -223,23 +245,13 @@
 						</div>
 						<!-- Bottom Part -->
 							<!-- ToDo List Container -->
-						 <div id="todo_list_container" style="display: flex; flex-direction:column; row-gap: 10px;">
+						 <div id="todo_list_container">
 							<!-- primer Item To-Do -->
 							<div class="to-do_Item">
-								<div style="display: flex; justify-content: space-between; align-items: center;">
+								<div data-todo-style="general" style="display: flex; justify-content: space-between; align-items: center;">
 									<div style="display: flex; column-gap: 15px; align-items: center;">
 										<span class="material-icons-outlined" style="padding: 7px; background-color: #adadad; border-radius: 10px;">handyman</span>
 										<p>Put here whatever you want </p>
-									</div>
-									<p style="text-wrap: nowrap; margin-left: 15px;">Fri, 20 sep</p>
-								</div>
-							</div>
-							<!-- otro Item To-Do -->
-							<div class="to-do_Item">
-								<div style="display: flex; justify-content: space-between; align-items: center;">
-									<div style="display: flex; column-gap: 15px; align-items: center;">
-										<span class="material-icons-outlined" style="padding: 7px; background-color: #adadad; border-radius: 10px;">handyman</span>
-										<p>Put here whatever you want sdfgh fghjk fghjkl dfghjkl fghj fghjkl erftghjkl ertyuikol ertyuiklo fghjkl</p>
 									</div>
 									<p style="text-wrap: nowrap; margin-left: 15px;">Fri, 20 sep</p>
 								</div>

@@ -90,32 +90,7 @@ button:hover{
 
 #company-logo{
 	height: 70px;
-}
-
-/* #nav_buttons{
-	display: flex;
-	align-items:safe;
-	flex-direction: column;
-	gap: 5px;
-}
-
-/*For syling ONLY all the "li" in the "nav_buttons"*/
-/* #nav_buttons li{
-	display: flex;
-	list-style-type: none;
-	align-items: center;
-	gap: 15px;
-	padding: 10px;
-	border-radius: 15px;
-	font-size: var(--font_xl);
-	cursor: pointer;
-} */
-
-/* (Pseudo-Class) For colouring when the User hover over the button */
-/* #nav_buttons li:hover{
-	background-color:var(--primary);
-} */
- 
+} 
 
 #nav-list { /* Cambiado a kebab-case para seguir las buenas prácticas */
 	display: flex;
@@ -236,9 +211,10 @@ header {
 	font-size: var(--font_sm);
 	margin-top: 2px;
 	
-	/* 🚀 EFECTO TRUNCADO MULTILÍNEA: Corta a máximo 2 líneas y pone "..." */
+	/* EFECTO TRUNCADO MULTILÍNEA: Corta a máximo 2 líneas y pone "..." */
 	display: -webkit-box;
 	-webkit-line-clamp: 2; 
+	line-clamp: 2;
 	-webkit-box-orient: vertical;
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -423,6 +399,7 @@ form .form_field_container label {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	font-size: var(--font_3xl);
 }
 
 /* For Import/Export JSON files*/
@@ -521,13 +498,6 @@ form .form_field_container label {
 	font-weight: bold;            /* Letra negrita para que resalte */
 }
 
-/* TO-DO Container_______________________________ */
-.to-do_Item{
-	padding: 20px;
- 	background-color: var(--background_content_200);
-	border-radius: 10px;
-	cursor: pointer;
-}
 
 
 /* USERS PAGE ____________________________________________________________________ */
@@ -650,6 +620,29 @@ form .form_field_container label {
 
 	display: flex;
 	justify-content: flex-end;
+}
+
+
+
+/* To-Do MODAL FORM ................................................*/
+
+#todo_list_container{
+	display: flex;
+	flex-direction:column;
+	row-gap: 10px;
+}
+
+#to-do_input_container{
+	display: flex;
+	flex-direction: column;
+}
+
+/* TO-DO Container_______________________________ */
+.to-do_Item{
+	padding: 20px;
+ 	background-color: var(--background_content_200);
+	border-radius: 10px;
+	/* cursor: pointer; */
 }
 
 

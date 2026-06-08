@@ -14,25 +14,26 @@ export class ProjectsManager{
 
 	//	METHODS...................................
 	
-		// Constructor:
-	constructor(container:HTMLElement, onProjectClick?: (project: Project) => void){
+	// Constructor with initialization and dynamic auto-click 🚀
+	constructor(container: HTMLElement, onProjectClick?: (project: Project) => void) {
 		this.ui = container;
-		this.onProjectClickCallback = onProjectClick; // Guardamos la acción
-		this.createDefProject();
-	}
+		this.onProjectClickCallback = onProjectClick; // 1. Save the callback action first
 
-		// To Create the Default Project
-	private createDefProject():void{
-		const projecDefData:IProject = {
-			name:"Default",
-			description:"Default",
-			userRole:"Architect",
-			status:"Active",
+		// 2. Create the default project 
+		const project = this.newProject({
+			name: "Default Project",
+			description: "This is just a default app project",
+			status: "Pending",
+			userRole: "Architect", 
 			finishDate: new Date(),
 			progress: 10,
-			toDos:[]
+			toDos: []
+		});
+
+		// 3. Simulate an immediate click to synchronize UI and app state
+		if (project && project.ui) {
+			project.ui.click();
 		}
-		this.newProject(projecDefData);
 	}
 
 		// New Project
@@ -40,8 +41,8 @@ export class ProjectsManager{
 
 		// To validate that the name is not empty or has at least 5 characters, otherwise assign "Untitled Project" as default name
 		if (!data.name || data.name.trim().length < 5) {
-        	throw new Error("Project name must be at least 5 characters long.");
-    	}
+			throw new Error("Project name must be at least 5 characters long.");
+		}
 
 		// To create a list with the names of the projects using "map"
 		const projectsNames = this.list.map((projectIterated)=>{
@@ -201,40 +202,40 @@ export class ProjectsManager{
 
 
 	// To render and update the DOM of the containers
-    private renderToDos(project: Project): void {
-        const todoContainer = document.getElementById("todo_list_container"); 
-        if (!todoContainer) {
-            console.warn("Todo container element ('#todo_list_container') was not found in the DOM.");
-            return;
-        }
+	private renderToDos(project: Project): void {
+		const todoContainer = document.getElementById("todo_list_container"); 
+		if (!todoContainer) {
+			console.warn("Todo container element ('#todo_list_container') was not found in the DOM.");
+			return;
+		}
 
-        // Limpiar el HTML residual de tareas anteriores
-        todoContainer.innerHTML = "";
+		// Limpiar el HTML residual de tareas anteriores
+		todoContainer.innerHTML = "";
 
-        if (project.toDos.length === 0) {
-            todoContainer.innerHTML = `<p style="color: #b7b7b7; font-style: italic; padding: 10px;">No tasks assigned yet.</p>`;
-            return;
-        }
+		if (project.toDos.length === 0) {
+			todoContainer.innerHTML = `<p style="color: #b7b7b7; font-style: italic; padding: 10px;">No tasks assigned yet.</p>`;
+			return;
+		}
 
-        project.toDos.forEach(todo => {
-            const todoItem = document.createElement("div");
-            todoItem.className = "to-do_Item"; // Hereda tus clases y reglas CSS
+		project.toDos.forEach(todo => {
+			const todoItem = document.createElement("div");
+			todoItem.className = "to-do_Item"; // Hereda tus clases y reglas CSS
 			let color = "#b7b7b7";
 			if (todo.status==="Pending") {color="#ff6b6b"}
 			if (todo.status==="In Progress") {color="#ffb703"}
 			if (todo.status==="Done") {color="#30e7a1"}
-            
-            todoItem.innerHTML = `
-              	<div data-todo-view="general" style="display: flex; justify-content: space-between; align-items: center;">
-                    <div>
-                        <p style="font-weight: bold; color: white; margin: 0;">${todo.description}</p>
-                        <p style="font-size: 13px; color: #999797; margin: 4px 0 0 0;">Due: ${new Date(todo.todo_Date).toLocaleDateString()}</p>
-                    </div>
-                    <span class="todo-status-badge" style="cursor: pointer; padding: 2px 8px; border-radius: 20px; font-size: 11px; background-color:${color}">
-                        ${todo.status}
-                    </span>
-                </div>
-            `;
+			
+			todoItem.innerHTML = `
+			  	<div data-todo-view="general" style="display: flex; justify-content: space-between; align-items: center;">
+					<div>
+						<p style="font-weight: bold; color: white; margin: 0;">${todo.description}</p>
+						<p style="font-size: 13px; color: #999797; margin: 4px 0 0 0;">Due: ${new Date(todo.todo_Date).toLocaleDateString()}</p>
+					</div>
+					<span class="todo-status-badge" style="cursor: pointer; padding: 2px 8px; border-radius: 20px; font-size: 11px; background-color:${color}">
+						${todo.status}
+					</span>
+				</div>
+			`;
 
 			// Event Listener dinámico para alternar y actualizar estados
 			const badge = todoItem.querySelector(".todo-status-badge");
@@ -249,9 +250,9 @@ export class ProjectsManager{
 					this.updateProject(project, project);
 				});
 			}
-            todoContainer.append(todoItem);
-        });
-    }
+			todoContainer.append(todoItem);
+		});
+	}
 
 
 		// To Export as JSON file
@@ -291,43 +292,43 @@ export class ProjectsManager{
 
 
 		// Register the Event when reader finishes the reading of the file
-        reader.addEventListener('load', () =>{
-            const json = reader.result;
-            if(!json) {return}
+		reader.addEventListener('load', () =>{
+			const json = reader.result;
+			if(!json) {return}
 
-            try {
-                const projects: IProject[] = JSON.parse(json as string)
-                
-                for (const projectData of projects){ 
+			try {
+				const projects: IProject[] = JSON.parse(json as string)
+				
+				for (const projectData of projects){ 
 
-                    // Verificar si el proyecto ya existe por su nombre en la lista en memoria
-                    const existingProject = this.list.find(p => p.name.toLowerCase() === projectData.name.toLowerCase());
-                    
-                    if (existingProject) {
-                        // Si ya existe, se sobreescribe/actualiza con la nueva información del JSON
-                        console.log(`El proyecto "${projectData.name}" ya existe. Actualizando datos e incluyendo To-Dos...`);
-                        this.updateProject(existingProject, projectData);
-                    } else {
-                        // Si es nuevo, se crea normalmente
-                        this.newProject(projectData);
-                    }
-                }
-            } catch (error) {
-                console.error("Error while processing the JSON file:", error);
-            }
-        })
-
-
-        // Register when the user have selected a file to upload.
-        input.addEventListener('change', () =>{
-            const filesList = input.files
-            if(!filesList || filesList.length === 0){return}
-            reader.readAsText(filesList[0])
-        })
+					// Verificar si el proyecto ya existe por su nombre en la lista en memoria
+					const existingProject = this.list.find(p => p.name.toLowerCase() === projectData.name.toLowerCase());
+					
+					if (existingProject) {
+						// Si ya existe, se sobreescribe/actualiza con la nueva información del JSON
+						console.log(`El proyecto "${projectData.name}" ya existe. Actualizando datos e incluyendo To-Dos...`);
+						this.updateProject(existingProject, projectData);
+					} else {
+						// Si es nuevo, se crea normalmente
+						this.newProject(projectData);
+					}
+				}
+			} catch (error) {
+				console.error("Error while processing the JSON file:", error);
+			}
+		})
 
 
-        // When the real "action" begins
-        input.click();       
-    }
+		// Register when the user have selected a file to upload.
+		input.addEventListener('change', () =>{
+			const filesList = input.files
+			if(!filesList || filesList.length === 0){return}
+			reader.readAsText(filesList[0])
+		})
+
+
+		// When the real "action" begins
+		input.click();       
+	}
 
 }

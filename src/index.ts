@@ -7,6 +7,8 @@ import { UsersManager } from "./Class/UsersManager"
 import { Project, IProject, UserRole, ProjectStatus, IToDo, ToDoStatus } from "./Class/Project"
 import { ProjectsManager } from "./Class/ProjectsManager"
 
+import * as THREE from "three"; // For 3D: Threejs
+
 
 // This "document" is provided by the Browser, the main purpose is to help us to interact with the DOM
 // DOM = Bridge between the HTML structure and programming languages like JavaScript. It gives super power to webpages to interact with the user and other apps.
@@ -572,3 +574,26 @@ else{
 // APP INITIAL PAGE:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 // To start by Default the page in the Projects List Page:
 navigateToPage("projects_list_page");
+
+
+
+
+
+
+// ________________________________ 3D VIEWER ________________________________________
+
+
+const scene = new THREE.Scene(); // Creates a Scene
+
+// Creating the camera:
+const viewerContainer = document.getElementById("viewer_container") as HTMLElement; // Get the Viewer Container
+const containerDimensions = viewerContainer.getBoundingClientRect(); // Get the Size-info of the Container
+const aspectRatio = containerDimensions.width / containerDimensions.height;
+const camera = new THREE.PerspectiveCamera(75,aspectRatio);  // fov=75 the greater the angle the wider the camera show
+
+// The Cameraman = renderer
+const renderer = new THREE.WebGLRenderer();
+
+// The be able to see wath camera is "recording" in the ViewerContainer
+viewerContainer.append(renderer.domElement) //renderer.domElement = its like a Monitor
+renderer.setSize(containerDimensions.width, containerDimensions.height) // To match the size of the ViewerContainer

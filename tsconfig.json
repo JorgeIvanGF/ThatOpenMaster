@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "bundler", /* Clave para que TS entienda a Vite */
+    
+    /* Configuración de archivos y mapas de desarrollo */
+    "sourceMap": true,
+    "declaration": false, /* No necesitas generar archivos .d.ts para una app web */
+    
+    /* Opciones recomendadas de Vite */
+    "isolatedModules": true, /* Asegura que cada archivo se pueda compilar por separado */
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    
+    /* Reglas de tipeado estricto (¡Para escribir código de alta calidad!) */
+    "strict": true,
+    "skipLibCheck": true /* Evita revisar errores dentro de la carpeta node_modules */
+  },
+  "include": ["**/*.ts", "**/*.tsx", "**/*.d.ts"] /* Le dice a TS qué archivos vigilar */
+}

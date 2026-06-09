@@ -583,17 +583,131 @@ navigateToPage("projects_list_page");
 // ________________________________ 3D VIEWER ________________________________________
 
 
-const scene = new THREE.Scene(); // Creates a Scene
+/* const scene = new THREE.Scene(); // Creates a Scene
 
-// Creating the camera:
+// Setting the camera:
 const viewerContainer = document.getElementById("viewer_container") as HTMLElement; // Get the Viewer Container
+(!viewerContainer)? console.log("Viewer container not found") : console.log("Viewer container obtained")
 const containerDimensions = viewerContainer.getBoundingClientRect(); // Get the Size-info of the Container
 const aspectRatio = containerDimensions.width / containerDimensions.height;
 const camera = new THREE.PerspectiveCamera(75,aspectRatio);  // fov=75 the greater the angle the wider the camera show
+camera.position.z = 5; // Changing camera position
 
-// The Cameraman = renderer
-const renderer = new THREE.WebGLRenderer();
+// Fix: Force the camera to look at the center of the scene where the cube is
+camera.lookAt(scene.position);
+
+const renderer = new THREE.WebGLRenderer(); // The Cameraman = renderer
 
 // The be able to see wath camera is "recording" in the ViewerContainer
 viewerContainer.append(renderer.domElement) //renderer.domElement = its like a Monitor
 renderer.setSize(containerDimensions.width, containerDimensions.height) // To match the size of the ViewerContainer
+
+// Creating Objects to place in the scene
+const boxGeometry = new THREE.BoxGeometry();
+const material = new THREE.MeshStandardMaterial();
+
+const cube = new THREE.Mesh(boxGeometry, material);
+
+// Lightining
+const directionalLight = new THREE.DirectionalLight(); // Acts like the sun (far distance light)
+const ambientLight = new THREE.AmbientLight(); // Acts like the Indirect light of the world
+
+// Adding to Scene
+scene.add(cube, directionalLight, ambientLight) // Adding the Object and lights to the Scene
+
+// Rendering
+renderer.render(scene, camera); */
+
+
+
+/* 
+// --------------------------------------------------- OPCION 2 -------------------------------------------------
+// Ensure all HTML layout rendering and CSS rules are fully loaded before execution
+window.addEventListener("load", () => {
+    const viewerContainer = document.getElementById("viewer_container") as HTMLElement; 
+    if (!viewerContainer) return; // Stop execution if the element is not found
+
+    const scene = new THREE.Scene(); 
+
+    // Extract the physical layout boundaries directly from the browser viewport engine
+    const containerDimensions = viewerContainer.getBoundingClientRect(); 
+    
+    // Fallback safely to 400px if the DOM layout calculation returns zero unexpectedly
+    const finalWidth = containerDimensions.width > 0 ? containerDimensions.width : 500;
+    const finalHeight = containerDimensions.height > 0 ? containerDimensions.height : 400;
+    const aspectRatio = finalWidth / finalHeight;
+
+    const camera = new THREE.PerspectiveCamera(75, aspectRatio, 0.1, 1000);
+    camera.position.z = 5; // Move the camera backwards so it doesn't clip inside the box
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true }); 
+    renderer.setSize(finalWidth, finalHeight); 
+    viewerContainer.append(renderer.domElement); // Append the canvas inside the viewer card
+
+    const boxGeometry = new THREE.BoxGeometry(2, 2, 2); 
+    const basicMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 }); // Luminescent red color
+
+    const cube = new THREE.Mesh(boxGeometry, basicMaterial);
+    scene.add(cube);
+
+    // Render the static shot once
+    renderer.render(scene, camera);
+}); */
+
+
+
+// ---------------------------------- OPCION 3 -----------------------------------------
+window.addEventListener("load", () => {
+    const viewerContainer = document.getElementById("viewer_container") as HTMLElement; 
+    if (!viewerContainer) return;
+
+    // 1. Inicializar la escena
+    const scene = new THREE.Scene(); 
+    const camera = new THREE.PerspectiveCamera(75);
+    camera.position.z = 5;
+
+    const renderer = new THREE.WebGLRenderer(); 
+    viewerContainer.append(renderer.domElement);
+
+    // Elementos de la escena (Cubo y Luces)
+    const boxGeometry = new THREE.BoxGeometry(); 
+    const basicMaterial = new THREE.MeshStandardMaterial();
+    const cube = new THREE.Mesh(boxGeometry, basicMaterial);
+    
+    const directionalLight = new THREE.DirectionalLight(); 
+    const ambientLight = new THREE.AmbientLight();
+    
+    scene.add(cube, directionalLight, ambientLight);
+
+    // 2. 🚀 FUNCIÓN MÁGICA DE AJUSTE DINÁMICO
+    function resizeViewer() {
+        // Medimos el tamaño real del contenedor asignado por el CSS en este instante
+        const width = viewerContainer.clientWidth;
+        const height = viewerContainer.clientHeight;
+
+        // Evitamos errores de división por cero si el contenedor está oculto (0px)
+        if (width === 0 || height === 0) return;
+
+        // Actualizamos las dimensiones del renderizador (Canvas)
+        renderer.setSize(width, height);
+
+        // Actualizamos la relación de aspecto de la cámara para que el cubo no se vea estirado
+        camera.aspect = width / height;
+        camera.updateProjectionMatrix(); // Le avisa a Three.js que la cámara cambió
+
+        // Volvemos a renderizar la escena con las nuevas dimensiones
+        renderer.render(scene, camera);
+    }
+
+    // 3. El Observador: Ejecuta resizeViewer cada vez que el contenedor cambie de tamaño
+    // Esto se activa al redimensionar la ventana o al pasar de .page.hidden a visible.
+    const resizeObserver = new ResizeObserver(() => {
+        resizeViewer();
+    });
+    
+    // Empezamos a escuchar los cambios en tu contenedor
+    resizeObserver.observe(viewerContainer);
+    
+    // Ejecución inicial por seguridad
+    resizeViewer();
+});

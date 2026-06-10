@@ -345,9 +345,29 @@ form .form_field_container label {
 	padding: 20px;
 }
 .dashboard_card.viewer{
-	background-color: var(--background_card);
+	/* background-color: var(--background_card); */
+
+	/* Flexibilidad basada en el diseño del navegador */
+    width: 100%;
+    height: 100%;
+    
+    /* Importante para contener el Canvas de Three.js */
+    position: relative;
+    overflow: hidden;
 
 }
+
+
+/*  Evita que el canvas empuje el contenedor hacia abajo */
+.dashboard_card.viewer canvas {
+    display: block;       /* Quita el comportamiento de línea (inline) que causa el margen extra hacia abajo */
+    position: absolute;   /* Lo saca del flujo de texto para que no empuje el contenedor */
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
+}
+
 
 #project_details_page header{
 	padding: 30px 20px 0px;

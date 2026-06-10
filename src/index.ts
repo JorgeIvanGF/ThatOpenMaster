@@ -12,7 +12,8 @@ import * as THREE from "three"; // For 3D: Threejs
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { GUI } from "three/examples/jsm/libs/lil-gui.module.min.js"; // For simple Controls Interface in the scene
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader.js"; // For the OBJ Loader
-import { MTLLoader } from "three/examples/jsm/loaders/MTLLoader.js"; // For the MTL file for where to aplly the Materials (in the OBJ file)
+import { MTLLoader } from "three/examples/jsm/loaders/MTLLoader.js"; // For the MTL file for where to apply the Materials (in the OBJ file)
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'; // Fot GLTF files
 
 
 // This "document" is provided by the Browser, the main purpose is to help us to interact with the DOM
@@ -708,14 +709,22 @@ window.addEventListener("load", () => {
 	const objLoader = new OBJLoader();
 	const mtlLoader = new MTLLoader();
 
-		// First Set the Materilas and then Apply them to the obj
+		// First Set the Materials and then Apply them to the obj
 	mtlLoader.load("../Assets/Gear/Gear1.mtl", (materials) =>{
 		materials.preload();
 		objLoader.setMaterials(materials);
 		objLoader.load("../Assets/Gear/Gear1.obj", (mesh) =>{
-			scene.remove(cube); // To rmv form Scene the cube created previously
-			scene.add(mesh); // to Add the "group" of meshes of the file
+			// scene.add(mesh); // to Add the "group" of meshes of the file
 		})
+	})
+
+
+		// GLTF File
+	const gltfLoader = new GLTFLoader();
+	gltfLoader.load("../Assets/Fosil/scene.gltf", (gltf) => {
+		scene.remove(cube);
+		const model = gltf.scene;
+		scene.add(model);
 	})
 
 

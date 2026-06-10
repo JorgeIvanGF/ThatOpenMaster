@@ -345,7 +345,7 @@ form .form_field_container label {
 	padding: 20px;
 }
 .dashboard_card.viewer{
-	background-color: var(--background_card);
+	/* background-color: var(--background_card); */
 
 	/* Flexibilidad basada en el diseño del navegador */
     width: 100%;

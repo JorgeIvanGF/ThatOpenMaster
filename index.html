@@ -8,6 +8,9 @@
 	<link rel="stylesheet" href="style.css"> <!-- To reference a CSS file -->
 </head>
 <body>
+	<!-- The Root for React -->
+	<div id="app">	</div>
+
 	<!-- GLOBAL MODALS (FORMS)_________________________________________________________________ -->
 		<!-- Project Modal Form -->
 	 <dialog id="new_project_modal"> <!-- to create the Modal Container -->
@@ -135,12 +138,8 @@
 
 
 	<!-- SIDEBAR______________________________________________________________________________ -->
-	<aside id="sidebar">
+	<!-- <aside id="sidebar">
 		<img id="company-logo" src="./Assets/companylogo.svg" alt="Construction Company logo">
-		<!-- <ul id="nav_buttons">
-			<li id="projectsBtn"><span class="material-icons-outlined">computer</span> Projects</li>
-			<li id="usersBtn"><span class="material-icons-outlined">how_to_reg</span> Users</li>
-		</ul> -->
 		<ul id="nav-list"> <li class="nav-item">
       		<button type="button" class="nav-button" id="projectsBtn">
         	<span class="material-icons-outlined">computer</span>
@@ -154,7 +153,7 @@
 			</button>
 			</li>
 		</ul>
-	</aside>
+	</aside> -->
 
 	<!-- MAIN CONTENT__________________________________________________________________________ -->
 	<main id="content">
@@ -417,6 +416,6 @@
 
 	<!-- to REFERENCE the JavaScript files: -->
 	<!-- type="module", to be able to use the imported files in JavaScript index file -->
-	 <script type="module" src="./src/index.ts"></script>
+	 <script type="module" src="./src/index.tsx"></script>
 </body>
 </html>

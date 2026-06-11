@@ -15,6 +15,11 @@ import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader.js"; // For the 
 import { MTLLoader } from "three/examples/jsm/loaders/MTLLoader.js"; // For the MTL file for where to apply the Materials (in the OBJ file)
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'; // Fot GLTF files
 
+// For React
+import * as React from "react";
+import * as ReactDOM from "react-dom/client";
+import { Sidebar } from "./react-components/Sidebar";
+
 
 // This "document" is provided by the Browser, the main purpose is to help us to interact with the DOM
 // DOM = Bridge between the HTML structure and programming languages like JavaScript. It gives super power to webpages to interact with the user and other apps.
@@ -23,6 +28,18 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'; // Fot GLTF fil
 
 
 // _____________________________2. UTILITY FUNCTIONS__________________________________________________
+
+
+	// REACT
+const rootElement = document.getElementById("app") as HTMLDivElement;
+const appRoot = ReactDOM.createRoot(rootElement);
+
+appRoot.render(
+	<Sidebar />
+)
+
+
+
 
 // Function Toggle to OPEN or CLOSE the Modal (Form)...............................
 function toggleForm(id: string, action: "open" | "close"): void {

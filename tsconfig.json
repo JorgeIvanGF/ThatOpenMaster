@@ -3,6 +3,7 @@
     "target": "ESNext",
     "module": "ESNext",
     "moduleResolution": "bundler", /* Clave para que TS entienda a Vite */
+    "jsx": "react-jsx",
     
     /* Configuración de archivos y mapas de desarrollo */
     "sourceMap": true,
